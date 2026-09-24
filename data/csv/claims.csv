@@ -1,0 +1,151 @@
+CLAIM_ID,PATIENT_ID,ENCOUNTER_ID,SERVICE_DATE,PROCEDURE_CODE,PROCEDURE_DESC,BILLED_AMOUNT,ALLOWED_AMOUNT,PAID_AMOUNT,PAYER,CLAIM_STATUS
+CLM-00001,P-0001,ENC-00001,2026-03-05,99232,"Subsequent hospital care, moderate complexity",230.66,164.69,133.02,Blue Cross,Denied
+CLM-00002,P-0001,ENC-00001,2026-03-05,80053,Comprehensive metabolic panel,30.58,18.75,15.71,Aetna,Pending
+CLM-00003,P-0001,ENC-00002,2026-05-14,99214,"Office visit, established, moderate complexity",191.77,162.78,144.15,Blue Cross,Denied
+CLM-00004,P-0001,ENC-00002,2026-05-14,80053,Comprehensive metabolic panel,27.69,17.19,15.44,Blue Cross,Paid
+CLM-00005,P-0001,ENC-00003,2026-07-20,99285,"ED visit, high severity",1106.54,790.11,660.55,Blue Cross,Paid
+CLM-00006,P-0001,ENC-00003,2026-07-20,80053,Comprehensive metabolic panel,34.81,23.07,18.0,Aetna,Denied
+CLM-00007,P-0001,ENC-00004,2026-09-02,93000,Electrocardiogram (ECG),41.98,34.37,25.74,Medicare,Paid
+CLM-00008,P-0001,ENC-00004,2026-09-02,80053,Comprehensive metabolic panel,59.58,47.19,40.92,Blue Cross,Paid
+CLM-00009,P-0002,ENC-00005,2026-02-10,99441,"Telephone E/M, 5-10 min",44.58,38.58,35.7,Blue Cross,Paid
+CLM-00010,P-0002,ENC-00006,2026-04-18,99222,"Initial hospital care, moderate complexity",617.38,454.46,448.16,Blue Cross,Denied
+CLM-00011,P-0002,ENC-00007,2026-06-22,99283,"ED visit, moderate severity",427.69,270.27,239.89,Medicaid,Denied
+CLM-00012,P-0002,ENC-00008,2026-08-15,99285,"ED visit, high severity",606.99,503.04,433.53,Medicaid,Paid
+CLM-00013,P-0002,ENC-00009,2026-09-10,71046,"Chest X-ray, 2 views",82.42,49.93,48.87,Blue Cross,Paid
+CLM-00014,P-0003,ENC-00010,2026-04-10,99213,"Office visit, established, low complexity",127.83,90.28,74.33,Aetna,Paid
+CLM-00015,P-0003,ENC-00010,2026-04-10,80053,Comprehensive metabolic panel,22.42,18.35,17.25,Aetna,Paid
+CLM-00016,P-0003,ENC-00011,2026-07-05,99285,"ED visit, high severity",634.11,482.49,358.03,UnitedHealthcare,Paid
+CLM-00017,P-0003,ENC-00011,2026-07-05,80053,Comprehensive metabolic panel,38.51,33.21,24.0,Medicaid,Paid
+CLM-00018,P-0003,ENC-00011,2026-07-05,71046,"Chest X-ray, 2 views",55.06,49.54,47.1,Aetna,Paid
+CLM-00019,P-0003,ENC-00012,2026-07-28,99285,"ED visit, high severity",616.42,459.66,351.24,Medicare,Paid
+CLM-00020,P-0003,ENC-00012,2026-07-28,80053,Comprehensive metabolic panel,26.59,15.97,13.05,Medicare,Paid
+CLM-00021,P-0003,ENC-00012,2026-07-28,71046,"Chest X-ray, 2 views",92.3,81.89,81.78,Medicaid,Pending
+CLM-00022,P-0003,ENC-00013,2026-08-19,99285,"ED visit, high severity",608.36,419.17,415.24,Medicaid,Denied
+CLM-00023,P-0003,ENC-00013,2026-08-19,80053,Comprehensive metabolic panel,22.44,15.58,11.14,Medicare,Denied
+CLM-00024,P-0003,ENC-00013,2026-08-19,71046,"Chest X-ray, 2 views",141.94,107.78,77.29,Medicaid,Paid
+CLM-00025,P-0003,ENC-00014,2026-09-08,99213,"Office visit, established, low complexity",140.34,87.09,62.74,UnitedHealthcare,Pending
+CLM-00026,P-0003,ENC-00014,2026-09-08,80053,Comprehensive metabolic panel,24.8,21.5,16.64,Medicaid,Paid
+CLM-00027,P-0004,ENC-00015,2026-03-09,99214,"Office visit, established, moderate complexity",202.46,171.85,122.57,Blue Cross,Paid
+CLM-00028,P-0004,ENC-00016,2026-05-16,93000,Electrocardiogram (ECG),98.59,63.93,53.22,Medicare,Denied
+CLM-00029,P-0004,ENC-00017,2026-07-22,99213,"Office visit, established, low complexity",92.27,81.52,73.96,UnitedHealthcare,Denied
+CLM-00030,P-0004,ENC-00015,2026-03-09,99213,"Office visit, established, low complexity",139.25,107.88,80.31,UnitedHealthcare,Paid
+CLM-00031,P-0004,ENC-00016,2026-05-16,99222,"Initial hospital care, moderate complexity",582.33,512.41,508.14,Aetna,Paid
+CLM-00032,P-0005,ENC-00018,2026-03-25,99213,"Office visit, established, low complexity",131.07,78.71,76.95,Medicaid,Paid
+CLM-00033,P-0005,ENC-00019,2026-04-01,99232,"Subsequent hospital care, moderate complexity",329.39,291.4,284.47,Medicaid,Paid
+CLM-00034,P-0005,ENC-00020,2026-07-31,93000,Electrocardiogram (ECG),89.36,72.91,57.61,Blue Cross,Pending
+CLM-00035,P-0005,ENC-00018,2026-03-25,99232,"Subsequent hospital care, moderate complexity",320.72,220.88,163.05,Medicare,Pending
+CLM-00036,P-0005,ENC-00019,2026-04-01,93000,Electrocardiogram (ECG),82.37,53.72,46.78,Medicare,Denied
+CLM-00037,P-0005,ENC-00020,2026-07-31,99213,"Office visit, established, low complexity",104.75,69.45,64.99,Medicaid,Paid
+CLM-00038,P-0006,ENC-00021,2026-02-17,99232,"Subsequent hospital care, moderate complexity",467.91,292.06,217.66,Medicare,Paid
+CLM-00039,P-0006,ENC-00022,2026-04-26,99441,"Telephone E/M, 5-10 min",48.56,35.18,28.12,Medicare,Pending
+CLM-00040,P-0006,ENC-00023,2026-05-01,99213,"Office visit, established, low complexity",98.44,71.47,69.43,Medicaid,Paid
+CLM-00041,P-0006,ENC-00024,2026-06-08,71046,"Chest X-ray, 2 views",88.04,52.98,42.68,Medicare,Pending
+CLM-00042,P-0006,ENC-00025,2026-06-21,80053,Comprehensive metabolic panel,49.9,38.12,33.58,UnitedHealthcare,Pending
+CLM-00043,P-0006,ENC-00021,2026-02-17,99285,"ED visit, high severity",691.05,515.31,420.83,Medicare,Paid
+CLM-00044,P-0007,ENC-00026,2026-01-26,99214,"Office visit, established, moderate complexity",196.97,167.26,129.27,Blue Cross,Denied
+CLM-00045,P-0007,ENC-00027,2026-03-11,99214,"Office visit, established, moderate complexity",223.51,172.05,122.55,Medicaid,Pending
+CLM-00046,P-0007,ENC-00028,2026-04-04,93000,Electrocardiogram (ECG),55.94,42.06,33.75,Medicare,Pending
+CLM-00047,P-0007,ENC-00029,2026-08-08,99214,"Office visit, established, moderate complexity",176.36,124.98,120.91,Medicare,Paid
+CLM-00048,P-0007,ENC-00030,2026-08-25,99024,Postoperative follow-up,17.05,12.9,11.55,Medicaid,Denied
+CLM-00049,P-0008,ENC-00031,2026-06-22,99222,"Initial hospital care, moderate complexity",553.31,370.25,339.29,Blue Cross,Paid
+CLM-00050,P-0008,ENC-00032,2026-07-14,99441,"Telephone E/M, 5-10 min",61.43,50.9,38.46,UnitedHealthcare,Pending
+CLM-00051,P-0008,ENC-00033,2026-08-26,99222,"Initial hospital care, moderate complexity",762.29,680.71,583.63,Blue Cross,Paid
+CLM-00052,P-0008,ENC-00031,2026-06-22,99285,"ED visit, high severity",707.37,501.0,396.13,Medicaid,Paid
+CLM-00053,P-0008,ENC-00032,2026-07-14,99222,"Initial hospital care, moderate complexity",422.76,260.57,205.24,UnitedHealthcare,Pending
+CLM-00054,P-0008,ENC-00033,2026-08-26,99214,"Office visit, established, moderate complexity",233.45,180.27,151.57,Medicare,Paid
+CLM-00055,P-0009,ENC-00034,2026-01-28,99441,"Telephone E/M, 5-10 min",56.1,38.24,32.96,Medicare,Paid
+CLM-00056,P-0009,ENC-00035,2026-02-13,71046,"Chest X-ray, 2 views",53.99,39.39,31.38,Blue Cross,Paid
+CLM-00057,P-0009,ENC-00036,2026-03-18,99214,"Office visit, established, moderate complexity",149.76,120.15,115.12,Medicaid,Paid
+CLM-00058,P-0009,ENC-00037,2026-03-19,93000,Electrocardiogram (ECG),87.5,67.63,62.82,UnitedHealthcare,Pending
+CLM-00059,P-0009,ENC-00038,2026-06-05,80053,Comprehensive metabolic panel,46.06,40.29,30.4,Medicaid,Pending
+CLM-00060,P-0009,ENC-00034,2026-01-28,93000,Electrocardiogram (ECG),87.0,77.49,65.17,Medicare,Paid
+CLM-00061,P-0010,ENC-00039,2026-01-19,80053,Comprehensive metabolic panel,30.69,18.44,16.92,Medicaid,Denied
+CLM-00062,P-0010,ENC-00040,2026-02-15,93000,Electrocardiogram (ECG),64.27,41.43,35.7,Blue Cross,Paid
+CLM-00063,P-0010,ENC-00041,2026-05-10,80053,Comprehensive metabolic panel,50.51,36.02,35.29,UnitedHealthcare,Paid
+CLM-00064,P-0010,ENC-00042,2026-06-11,71046,"Chest X-ray, 2 views",88.3,75.66,62.29,Blue Cross,Pending
+CLM-00065,P-0010,ENC-00043,2026-08-21,99441,"Telephone E/M, 5-10 min",76.54,54.68,54.49,UnitedHealthcare,Pending
+CLM-00066,P-0010,ENC-00039,2026-01-19,99213,"Office visit, established, low complexity",93.21,82.92,66.3,Aetna,Pending
+CLM-00067,P-0011,ENC-00044,2026-02-11,93000,Electrocardiogram (ECG),97.34,78.56,65.76,Blue Cross,Paid
+CLM-00068,P-0011,ENC-00045,2026-06-18,99024,Postoperative follow-up,44.13,27.89,22.71,Blue Cross,Denied
+CLM-00069,P-0011,ENC-00046,2026-06-23,99222,"Initial hospital care, moderate complexity",896.35,617.2,613.12,Medicare,Paid
+CLM-00070,P-0011,ENC-00047,2026-07-23,99213,"Office visit, established, low complexity",121.79,98.13,90.61,Aetna,Denied
+CLM-00071,P-0011,ENC-00044,2026-02-11,99441,"Telephone E/M, 5-10 min",59.87,52.16,40.99,UnitedHealthcare,Denied
+CLM-00072,P-0011,ENC-00045,2026-06-18,99232,"Subsequent hospital care, moderate complexity",265.7,174.58,135.33,UnitedHealthcare,Paid
+CLM-00073,P-0012,ENC-00048,2026-03-09,99214,"Office visit, established, moderate complexity",138.17,122.13,96.64,Medicare,Paid
+CLM-00074,P-0012,ENC-00049,2026-03-31,99214,"Office visit, established, moderate complexity",150.52,114.59,93.57,Blue Cross,Denied
+CLM-00075,P-0012,ENC-00050,2026-04-13,99024,Postoperative follow-up,33.49,27.39,26.45,Aetna,Pending
+CLM-00076,P-0012,ENC-00051,2026-08-01,71046,"Chest X-ray, 2 views",90.81,80.41,57.08,Blue Cross,Paid
+CLM-00077,P-0012,ENC-00048,2026-03-09,85025,CBC with differential,30.56,20.5,16.58,Blue Cross,Denied
+CLM-00078,P-0012,ENC-00049,2026-03-31,93000,Electrocardiogram (ECG),55.11,39.65,30.01,Aetna,Pending
+CLM-00079,P-0013,ENC-00052,2026-02-05,99214,"Office visit, established, moderate complexity",161.87,104.33,76.98,Medicaid,Denied
+CLM-00080,P-0013,ENC-00053,2026-04-17,80053,Comprehensive metabolic panel,48.49,34.64,30.46,Blue Cross,Pending
+CLM-00081,P-0013,ENC-00054,2026-04-21,80053,Comprehensive metabolic panel,44.22,27.85,25.36,Medicaid,Paid
+CLM-00082,P-0013,ENC-00052,2026-02-05,99024,Postoperative follow-up,28.06,18.76,15.04,Medicare,Pending
+CLM-00083,P-0013,ENC-00053,2026-04-17,99024,Postoperative follow-up,39.18,27.18,21.57,Blue Cross,Paid
+CLM-00084,P-0014,ENC-00055,2026-01-31,85025,CBC with differential,36.25,26.25,20.07,Medicaid,Paid
+CLM-00085,P-0014,ENC-00056,2026-03-04,99232,"Subsequent hospital care, moderate complexity",328.97,225.34,203.61,Medicare,Denied
+CLM-00086,P-0014,ENC-00057,2026-03-08,93000,Electrocardiogram (ECG),51.59,34.37,34.21,Aetna,Paid
+CLM-00087,P-0014,ENC-00058,2026-06-18,99285,"ED visit, high severity",710.99,471.65,349.57,Blue Cross,Paid
+CLM-00088,P-0014,ENC-00059,2026-07-10,99232,"Subsequent hospital care, moderate complexity",236.0,176.81,146.61,UnitedHealthcare,Pending
+CLM-00089,P-0014,ENC-00055,2026-01-31,80053,Comprehensive metabolic panel,48.15,36.12,34.31,Blue Cross,Paid
+CLM-00090,P-0015,ENC-00060,2026-02-28,99232,"Subsequent hospital care, moderate complexity",352.2,244.12,203.98,Aetna,Paid
+CLM-00091,P-0015,ENC-00061,2026-05-29,99222,"Initial hospital care, moderate complexity",438.37,376.68,360.33,Medicaid,Denied
+CLM-00092,P-0015,ENC-00062,2026-07-27,80053,Comprehensive metabolic panel,35.38,27.39,27.01,Aetna,Pending
+CLM-00093,P-0015,ENC-00063,2026-07-27,71046,"Chest X-ray, 2 views",115.18,80.22,67.6,UnitedHealthcare,Paid
+CLM-00094,P-0015,ENC-00064,2026-08-02,85025,CBC with differential,18.62,16.19,13.0,Aetna,Denied
+CLM-00095,P-0016,ENC-00065,2026-05-25,71046,"Chest X-ray, 2 views",87.67,56.87,53.99,Medicaid,Paid
+CLM-00096,P-0016,ENC-00066,2026-06-23,99441,"Telephone E/M, 5-10 min",57.51,41.59,37.55,UnitedHealthcare,Pending
+CLM-00097,P-0016,ENC-00067,2026-07-18,71046,"Chest X-ray, 2 views",78.49,64.72,54.02,Medicaid,Paid
+CLM-00098,P-0016,ENC-00068,2026-07-29,99222,"Initial hospital care, moderate complexity",882.8,737.41,716.17,UnitedHealthcare,Paid
+CLM-00099,P-0016,ENC-00065,2026-05-25,93000,Electrocardiogram (ECG),96.3,86.22,72.3,Blue Cross,Pending
+CLM-00100,P-0017,ENC-00069,2026-02-12,99214,"Office visit, established, moderate complexity",134.41,117.14,102.97,Aetna,Denied
+CLM-00101,P-0017,ENC-00070,2026-02-22,71046,"Chest X-ray, 2 views",74.19,47.71,39.54,Medicaid,Paid
+CLM-00102,P-0017,ENC-00071,2026-03-05,99285,"ED visit, high severity",899.46,590.22,531.47,Medicaid,Paid
+CLM-00103,P-0017,ENC-00072,2026-03-24,99214,"Office visit, established, moderate complexity",243.94,186.18,174.25,Medicaid,Denied
+CLM-00104,P-0017,ENC-00073,2026-05-26,99213,"Office visit, established, low complexity",110.38,81.8,72.86,Blue Cross,Paid
+CLM-00105,P-0017,ENC-00069,2026-02-12,99441,"Telephone E/M, 5-10 min",40.65,34.01,27.33,Aetna,Denied
+CLM-00106,P-0018,ENC-00074,2026-01-19,71046,"Chest X-ray, 2 views",149.82,102.23,101.62,Aetna,Paid
+CLM-00107,P-0018,ENC-00075,2026-02-02,93000,Electrocardiogram (ECG),74.63,52.91,49.75,UnitedHealthcare,Paid
+CLM-00108,P-0018,ENC-00076,2026-03-11,99283,"ED visit, moderate severity",547.03,439.5,365.42,UnitedHealthcare,Paid
+CLM-00109,P-0018,ENC-00077,2026-04-04,99285,"ED visit, high severity",1044.96,741.82,604.48,Medicaid,Paid
+CLM-00110,P-0018,ENC-00078,2026-08-23,71046,"Chest X-ray, 2 views",65.34,48.02,38.96,Medicare,Paid
+CLM-00111,P-0018,ENC-00074,2026-01-19,71046,"Chest X-ray, 2 views",63.77,45.28,35.97,Blue Cross,Paid
+CLM-00112,P-0019,ENC-00079,2026-04-20,99283,"ED visit, moderate severity",401.42,350.53,251.2,Aetna,Denied
+CLM-00113,P-0019,ENC-00080,2026-05-27,99283,"ED visit, moderate severity",356.44,231.18,226.65,UnitedHealthcare,Paid
+CLM-00114,P-0019,ENC-00081,2026-08-17,80053,Comprehensive metabolic panel,55.8,47.64,36.93,Medicaid,Paid
+CLM-00115,P-0019,ENC-00082,2026-09-09,99283,"ED visit, moderate severity",468.76,367.66,267.67,UnitedHealthcare,Denied
+CLM-00116,P-0019,ENC-00079,2026-04-20,71046,"Chest X-ray, 2 views",65.42,52.18,47.81,Medicaid,Paid
+CLM-00117,P-0020,ENC-00083,2026-01-16,99213,"Office visit, established, low complexity",88.29,66.08,63.75,Medicare,Paid
+CLM-00118,P-0020,ENC-00084,2026-05-29,80053,Comprehensive metabolic panel,20.33,12.85,9.51,Blue Cross,Paid
+CLM-00119,P-0020,ENC-00085,2026-06-04,99024,Postoperative follow-up,24.64,17.75,15.46,UnitedHealthcare,Paid
+CLM-00120,P-0020,ENC-00086,2026-09-05,80053,Comprehensive metabolic panel,31.54,22.58,18.86,Medicaid,Paid
+CLM-00121,P-0020,ENC-00087,2026-09-12,71046,"Chest X-ray, 2 views",118.04,75.03,74.47,Medicare,Paid
+CLM-00122,P-0020,ENC-00083,2026-01-16,99232,"Subsequent hospital care, moderate complexity",367.35,260.7,193.77,Medicaid,Denied
+CLM-00123,P-0021,ENC-00088,2026-03-13,80053,Comprehensive metabolic panel,34.17,28.42,26.04,Blue Cross,Denied
+CLM-00124,P-0021,ENC-00089,2026-03-18,85025,CBC with differential,21.73,14.65,12.71,UnitedHealthcare,Paid
+CLM-00125,P-0021,ENC-00090,2026-06-13,99222,"Initial hospital care, moderate complexity",752.45,607.28,514.18,Medicare,Paid
+CLM-00126,P-0021,ENC-00091,2026-06-17,80053,Comprehensive metabolic panel,57.35,48.09,37.61,Aetna,Denied
+CLM-00127,P-0021,ENC-00088,2026-03-13,93000,Electrocardiogram (ECG),68.02,59.09,48.36,Blue Cross,Paid
+CLM-00128,P-0021,ENC-00089,2026-03-18,99222,"Initial hospital care, moderate complexity",421.03,373.28,270.15,Medicare,Paid
+CLM-00129,P-0022,ENC-00092,2026-01-26,99213,"Office visit, established, low complexity",132.88,111.25,96.82,UnitedHealthcare,Paid
+CLM-00130,P-0022,ENC-00093,2026-04-26,71046,"Chest X-ray, 2 views",135.61,117.86,111.74,Medicaid,Paid
+CLM-00131,P-0022,ENC-00094,2026-04-30,99214,"Office visit, established, moderate complexity",172.11,108.19,107.6,Medicare,Paid
+CLM-00132,P-0022,ENC-00095,2026-05-03,99285,"ED visit, high severity",504.78,360.95,301.04,Blue Cross,Paid
+CLM-00133,P-0022,ENC-00096,2026-05-05,99222,"Initial hospital care, moderate complexity",691.23,533.54,415.34,Blue Cross,Paid
+CLM-00134,P-0023,ENC-00097,2026-03-02,99283,"ED visit, moderate severity",519.14,430.76,427.96,Medicare,Paid
+CLM-00135,P-0023,ENC-00098,2026-04-23,99024,Postoperative follow-up,27.94,24.45,19.88,Aetna,Denied
+CLM-00136,P-0023,ENC-00099,2026-04-24,99283,"ED visit, moderate severity",478.74,337.19,254.09,Medicaid,Pending
+CLM-00137,P-0023,ENC-00100,2026-06-01,80053,Comprehensive metabolic panel,25.09,22.42,21.31,Aetna,Paid
+CLM-00138,P-0023,ENC-00101,2026-07-08,85025,CBC with differential,38.57,29.44,25.31,UnitedHealthcare,Paid
+CLM-00139,P-0023,ENC-00097,2026-03-02,85025,CBC with differential,27.12,18.51,18.16,Aetna,Paid
+CLM-00140,P-0024,ENC-00102,2026-01-23,85025,CBC with differential,44.65,28.03,25.71,UnitedHealthcare,Paid
+CLM-00141,P-0024,ENC-00103,2026-01-25,99222,"Initial hospital care, moderate complexity",588.58,459.97,327.44,Aetna,Paid
+CLM-00142,P-0024,ENC-00104,2026-05-06,71046,"Chest X-ray, 2 views",122.43,93.98,79.3,Blue Cross,Paid
+CLM-00143,P-0024,ENC-00105,2026-07-25,99213,"Office visit, established, low complexity",98.77,64.89,59.86,Medicare,Paid
+CLM-00144,P-0024,ENC-00102,2026-01-23,99441,"Telephone E/M, 5-10 min",64.18,42.45,41.37,Medicaid,Paid
+CLM-00145,P-0025,ENC-00106,2026-02-20,93000,Electrocardiogram (ECG),64.15,38.62,33.43,Aetna,Paid
+CLM-00146,P-0025,ENC-00107,2026-04-15,80053,Comprehensive metabolic panel,48.89,37.19,29.23,Medicaid,Pending
+CLM-00147,P-0025,ENC-00108,2026-06-13,99283,"ED visit, moderate severity",287.46,180.78,134.62,UnitedHealthcare,Denied
+CLM-00148,P-0025,ENC-00109,2026-08-29,80053,Comprehensive metabolic panel,30.1,21.26,19.95,Aetna,Paid
+CLM-00149,P-0025,ENC-00106,2026-02-20,99024,Postoperative follow-up,28.36,19.09,17.36,Blue Cross,Paid
+CLM-00150,P-0025,ENC-00107,2026-04-15,93000,Electrocardiogram (ECG),99.42,79.04,56.08,Medicare,Pending

@@ -1,0 +1,26 @@
+PATIENT_ID,FIRST_NAME,LAST_NAME,DATE_OF_BIRTH,GENDER,RACE,ETHNICITY,ZIP_CODE,STATE,INSURANCE_TYPE,PRIMARY_LANGUAGE
+P-0001,Margaret,Wilson,1954-03-12,Female,Pacific Islander,Hispanic or Latino,13278,OH,Medicare,English
+P-0002,Robert,Garcia,1959-08-25,Male,Black,Hispanic or Latino,51347,TX,Medicare,Spanish
+P-0003,Denise,Jackson,1948-11-07,Female,White,Hispanic or Latino,84364,FL,Medicare,English
+P-0004,Joseph,Young,1997-05-13,Male,Native American,Not Hispanic or Latino,44179,FL,Medicare,English
+P-0005,Charles,Martinez,1954-03-23,Male,Two or More,Not Hispanic or Latino,63264,NC,Commercial,English
+P-0006,Nancy,Martin,1964-03-04,Female,Hispanic,Not Hispanic or Latino,32241,TX,Medicare,English
+P-0007,Susan,Robinson,1992-12-02,Female,Hispanic,Not Hispanic or Latino,83975,CA,Medicare,English
+P-0008,Nancy,Jackson,1998-02-26,Female,Asian,Hispanic or Latino,21359,IL,Commercial,Spanish
+P-0009,James,Wilson,1987-11-11,Male,Two or More,Hispanic or Latino,62521,MI,Medicare,English
+P-0010,Emily,Williams,1959-06-06,Female,Hispanic,Not Hispanic or Latino,74942,IL,Commercial,Spanish
+P-0011,Daniel,Martin,1946-05-18,Male,Hispanic,Not Hispanic or Latino,30232,TX,Medicaid,Spanish
+P-0012,David,Martin,1947-12-30,Male,Asian,Not Hispanic or Latino,27224,TX,Medicare,English
+P-0013,Charles,Davis,1998-07-29,Male,White,Not Hispanic or Latino,41925,NY,Medicare,Mandarin
+P-0014,Charles,Lee,1951-01-09,Male,Two or More,Hispanic or Latino,22219,OH,Medicare,English
+P-0015,Jessica,Smith,1984-02-20,Female,Hispanic,Hispanic or Latino,51033,NC,Medicare,Spanish
+P-0016,James,Martinez,1984-04-10,Male,Native American,Not Hispanic or Latino,89928,NY,Commercial,English
+P-0017,Susan,Davis,1999-04-01,Female,Two or More,Not Hispanic or Latino,16839,MI,Medicaid,English
+P-0018,Susan,Smith,1976-08-10,Female,Asian,Not Hispanic or Latino,32949,MI,Medicare,Spanish
+P-0019,James,King,1961-09-10,Male,Native American,Not Hispanic or Latino,83619,TX,Commercial,English
+P-0020,James,Johnson,1949-01-29,Male,Asian,Not Hispanic or Latino,37631,NC,Medicare,Spanish
+P-0021,Karen,Smith,1949-01-24,Female,Black,Not Hispanic or Latino,53652,MI,Medicare,Mandarin
+P-0022,Patricia,Davis,1993-04-27,Female,Native American,Not Hispanic or Latino,45601,NY,Commercial,English
+P-0023,Charles,Williams,1986-10-03,Male,Black,Not Hispanic or Latino,99925,GA,Commercial,English
+P-0024,Sarah,Wright,1946-05-28,Female,Black,Hispanic or Latino,23224,NC,Medicaid,English
+P-0025,Lisa,Martin,1992-11-16,Female,Asian,Not Hispanic or Latino,57139,GA,Commercial,Spanish

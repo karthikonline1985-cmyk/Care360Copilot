@@ -1,0 +1,110 @@
+ENCOUNTER_ID,PATIENT_ID,ENCOUNTER_DATE,ENCOUNTER_TYPE,PROVIDER_NAME,FACILITY_NAME,DISCHARGE_DATE,CHIEF_COMPLAINT
+ENC-00001,P-0001,2026-03-05,Outpatient,Dr. Rivera,St. Luke's Medical Center,,Chronic disease management
+ENC-00002,P-0001,2026-05-14,Outpatient,Dr. Okonkwo,Mercy General Hospital,,Chronic disease management
+ENC-00003,P-0001,2026-07-20,Outpatient,Dr. Patel,Metro Community Hospital,,Chronic disease management
+ENC-00004,P-0001,2026-09-02,Inpatient,Dr. Chen,Mercy General Hospital,2026-09-03,Acute kidney injury
+ENC-00005,P-0002,2026-02-10,Outpatient,Dr. Patel,St. Luke's Medical Center,,Annual wellness visit
+ENC-00006,P-0002,2026-04-18,Telehealth,Dr. Kim,St. Luke's Medical Center,,Lab result review
+ENC-00007,P-0002,2026-06-22,Outpatient,NP Blake,St. Luke's Medical Center,,Lab review
+ENC-00008,P-0002,2026-08-15,Outpatient,Dr. Rivera,Valley Health Clinic,,Annual wellness visit
+ENC-00009,P-0002,2026-09-10,Outpatient,NP Simmons,Valley Health Clinic,,Medication refill
+ENC-00010,P-0003,2026-04-10,Outpatient,Dr. Patel,Metro Community Hospital,,Routine follow-up
+ENC-00011,P-0003,2026-07-05,ER,Dr. Patel,St. Luke's Medical Center,2026-07-05,Fall injury
+ENC-00012,P-0003,2026-07-28,ER,Dr. Okonkwo,Metro Community Hospital,2026-07-28,Chest pain
+ENC-00013,P-0003,2026-08-19,ER,Dr. Okonkwo,Valley Health Clinic,2026-08-19,Shortness of breath
+ENC-00014,P-0003,2026-09-08,Inpatient,NP Simmons,St. Luke's Medical Center,2026-09-13,CHF exacerbation
+ENC-00015,P-0004,2026-03-09,ER,NP Blake,Valley Health Clinic,2026-03-09,Chest pain
+ENC-00016,P-0004,2026-05-16,Outpatient,NP Blake,Mercy General Hospital,,Routine follow-up
+ENC-00017,P-0004,2026-07-22,Inpatient,Dr. Thompson,St. Luke's Medical Center,2026-07-27,Pneumonia
+ENC-00018,P-0005,2026-03-25,Outpatient,Dr. Okonkwo,Valley Health Clinic,,Chronic disease management
+ENC-00019,P-0005,2026-04-01,Inpatient,Dr. Okonkwo,Mercy General Hospital,2026-04-04,CHF exacerbation
+ENC-00020,P-0005,2026-07-31,Outpatient,NP Blake,St. Luke's Medical Center,,Medication refill
+ENC-00021,P-0006,2026-02-17,Inpatient,Dr. Chen,Mercy General Hospital,2026-02-19,Shortness of breath
+ENC-00022,P-0006,2026-04-26,Telehealth,Dr. Patel,Metro Community Hospital,,Lab result review
+ENC-00023,P-0006,2026-05-01,Inpatient,NP Blake,Metro Community Hospital,2026-05-05,Shortness of breath
+ENC-00024,P-0006,2026-06-08,Inpatient,Dr. Patel,Metro Community Hospital,2026-06-09,Shortness of breath
+ENC-00025,P-0006,2026-06-21,Inpatient,NP Blake,Mercy General Hospital,2026-06-26,Acute kidney injury
+ENC-00026,P-0007,2026-01-26,ER,NP Simmons,Valley Health Clinic,2026-01-26,Fall injury
+ENC-00027,P-0007,2026-03-11,Telehealth,Dr. Kim,Valley Health Clinic,,Lab result review
+ENC-00028,P-0007,2026-04-04,ER,NP Simmons,Valley Health Clinic,2026-04-04,Chest pain
+ENC-00029,P-0007,2026-08-08,Telehealth,Dr. Chen,Mercy General Hospital,,Mental health check-in
+ENC-00030,P-0007,2026-08-25,Inpatient,Dr. Chen,Mercy General Hospital,2026-08-26,Shortness of breath
+ENC-00031,P-0008,2026-06-22,Outpatient,NP Blake,Valley Health Clinic,,Medication refill
+ENC-00032,P-0008,2026-07-14,Telehealth,Dr. Rivera,Valley Health Clinic,,Mental health check-in
+ENC-00033,P-0008,2026-08-26,ER,Dr. Thompson,Valley Health Clinic,2026-08-26,Shortness of breath
+ENC-00034,P-0009,2026-01-28,Inpatient,NP Simmons,St. Luke's Medical Center,2026-01-29,Acute kidney injury
+ENC-00035,P-0009,2026-02-13,Telehealth,NP Blake,Metro Community Hospital,,Mental health check-in
+ENC-00036,P-0009,2026-03-18,Telehealth,Dr. Thompson,Mercy General Hospital,,Medication review
+ENC-00037,P-0009,2026-03-19,Inpatient,Dr. Thompson,Mercy General Hospital,2026-03-21,Shortness of breath
+ENC-00038,P-0009,2026-06-05,Inpatient,Dr. Patel,St. Luke's Medical Center,2026-06-07,Chest pain
+ENC-00039,P-0010,2026-01-19,ER,Dr. Patel,Metro Community Hospital,2026-01-19,Shortness of breath
+ENC-00040,P-0010,2026-02-15,Outpatient,NP Blake,Metro Community Hospital,,Routine follow-up
+ENC-00041,P-0010,2026-05-10,Inpatient,Dr. Kim,Metro Community Hospital,2026-05-15,CHF exacerbation
+ENC-00042,P-0010,2026-06-11,Outpatient,Dr. Rivera,Valley Health Clinic,,Annual wellness visit
+ENC-00043,P-0010,2026-08-21,Inpatient,NP Blake,Metro Community Hospital,2026-08-24,Chest pain
+ENC-00044,P-0011,2026-02-11,Telehealth,Dr. Kim,Metro Community Hospital,,Medication review
+ENC-00045,P-0011,2026-06-18,Outpatient,Dr. Rivera,Valley Health Clinic,,Medication refill
+ENC-00046,P-0011,2026-06-23,Outpatient,NP Simmons,Mercy General Hospital,,Routine follow-up
+ENC-00047,P-0011,2026-07-23,Telehealth,Dr. Okonkwo,Valley Health Clinic,,Medication review
+ENC-00048,P-0012,2026-03-09,ER,Dr. Thompson,St. Luke's Medical Center,2026-03-09,Severe headache
+ENC-00049,P-0012,2026-03-31,Telehealth,Dr. Thompson,Valley Health Clinic,,Medication review
+ENC-00050,P-0012,2026-04-13,Telehealth,Dr. Patel,St. Luke's Medical Center,,Follow-up
+ENC-00051,P-0012,2026-08-01,Telehealth,Dr. Kim,Mercy General Hospital,,Lab result review
+ENC-00052,P-0013,2026-02-05,Inpatient,Dr. Okonkwo,Mercy General Hospital,2026-02-08,Pneumonia
+ENC-00053,P-0013,2026-04-17,Inpatient,Dr. Thompson,St. Luke's Medical Center,2026-04-19,Chest pain
+ENC-00054,P-0013,2026-04-21,Outpatient,Dr. Okonkwo,Mercy General Hospital,,Lab review
+ENC-00055,P-0014,2026-01-31,Telehealth,Dr. Kim,Metro Community Hospital,,Medication review
+ENC-00056,P-0014,2026-03-04,ER,Dr. Thompson,Valley Health Clinic,2026-03-04,Chest pain
+ENC-00057,P-0014,2026-03-08,Inpatient,NP Blake,St. Luke's Medical Center,2026-03-10,Chest pain
+ENC-00058,P-0014,2026-06-18,ER,Dr. Kim,Mercy General Hospital,2026-06-18,Severe headache
+ENC-00059,P-0014,2026-07-10,Inpatient,Dr. Chen,Valley Health Clinic,2026-07-14,Chest pain
+ENC-00060,P-0015,2026-02-28,Outpatient,Dr. Kim,St. Luke's Medical Center,,Annual wellness visit
+ENC-00061,P-0015,2026-05-29,Telehealth,Dr. Kim,Mercy General Hospital,,Lab result review
+ENC-00062,P-0015,2026-07-27,Outpatient,Dr. Rivera,Metro Community Hospital,,Annual wellness visit
+ENC-00063,P-0015,2026-07-27,Telehealth,Dr. Patel,Metro Community Hospital,,Mental health check-in
+ENC-00064,P-0015,2026-08-02,ER,Dr. Rivera,Valley Health Clinic,2026-08-02,Fall injury
+ENC-00065,P-0016,2026-05-25,Outpatient,Dr. Kim,Mercy General Hospital,,Lab review
+ENC-00066,P-0016,2026-06-23,Outpatient,NP Simmons,Valley Health Clinic,,Lab review
+ENC-00067,P-0016,2026-07-18,Inpatient,Dr. Patel,St. Luke's Medical Center,2026-07-21,Pneumonia
+ENC-00068,P-0016,2026-07-29,ER,NP Simmons,St. Luke's Medical Center,2026-07-29,Shortness of breath
+ENC-00069,P-0017,2026-02-12,ER,NP Blake,St. Luke's Medical Center,2026-02-12,Abdominal pain
+ENC-00070,P-0017,2026-02-22,Outpatient,Dr. Rivera,Metro Community Hospital,,Lab review
+ENC-00071,P-0017,2026-03-05,Outpatient,NP Simmons,Mercy General Hospital,,Chronic disease management
+ENC-00072,P-0017,2026-03-24,ER,Dr. Rivera,Metro Community Hospital,2026-03-24,Chest pain
+ENC-00073,P-0017,2026-05-26,ER,Dr. Rivera,Mercy General Hospital,2026-05-26,Severe headache
+ENC-00074,P-0018,2026-01-19,ER,Dr. Rivera,Mercy General Hospital,2026-01-19,Fall injury
+ENC-00075,P-0018,2026-02-02,Outpatient,Dr. Kim,Valley Health Clinic,,Annual wellness visit
+ENC-00076,P-0018,2026-03-11,Telehealth,NP Blake,Valley Health Clinic,,Medication review
+ENC-00077,P-0018,2026-04-04,Inpatient,Dr. Kim,Mercy General Hospital,2026-04-07,Pneumonia
+ENC-00078,P-0018,2026-08-23,ER,Dr. Patel,Valley Health Clinic,2026-08-23,Abdominal pain
+ENC-00079,P-0019,2026-04-20,Inpatient,Dr. Okonkwo,Mercy General Hospital,2026-04-21,CHF exacerbation
+ENC-00080,P-0019,2026-05-27,Inpatient,Dr. Patel,Valley Health Clinic,2026-05-31,Pneumonia
+ENC-00081,P-0019,2026-08-17,Outpatient,Dr. Thompson,Valley Health Clinic,,Medication refill
+ENC-00082,P-0019,2026-09-09,Inpatient,Dr. Rivera,Mercy General Hospital,2026-09-12,Shortness of breath
+ENC-00083,P-0020,2026-01-16,Inpatient,Dr. Thompson,Metro Community Hospital,2026-01-20,Chest pain
+ENC-00084,P-0020,2026-05-29,Outpatient,Dr. Okonkwo,Metro Community Hospital,,Chronic disease management
+ENC-00085,P-0020,2026-06-04,Telehealth,NP Blake,St. Luke's Medical Center,,Mental health check-in
+ENC-00086,P-0020,2026-09-05,Inpatient,Dr. Kim,Valley Health Clinic,2026-09-08,CHF exacerbation
+ENC-00087,P-0020,2026-09-12,Inpatient,Dr. Patel,Valley Health Clinic,2026-09-15,Shortness of breath
+ENC-00088,P-0021,2026-03-13,Inpatient,Dr. Thompson,Valley Health Clinic,2026-03-17,Acute kidney injury
+ENC-00089,P-0021,2026-03-18,Telehealth,Dr. Thompson,Metro Community Hospital,,Medication review
+ENC-00090,P-0021,2026-06-13,ER,Dr. Kim,Mercy General Hospital,2026-06-13,Abdominal pain
+ENC-00091,P-0021,2026-06-17,ER,Dr. Chen,Metro Community Hospital,2026-06-17,Severe headache
+ENC-00092,P-0022,2026-01-26,Outpatient,Dr. Patel,Metro Community Hospital,,Lab review
+ENC-00093,P-0022,2026-04-26,Telehealth,Dr. Patel,St. Luke's Medical Center,,Medication review
+ENC-00094,P-0022,2026-04-30,Inpatient,NP Blake,Metro Community Hospital,2026-05-04,Shortness of breath
+ENC-00095,P-0022,2026-05-03,ER,Dr. Kim,Valley Health Clinic,2026-05-03,Laceration
+ENC-00096,P-0022,2026-05-05,Outpatient,Dr. Patel,St. Luke's Medical Center,,Annual wellness visit
+ENC-00097,P-0023,2026-03-02,Inpatient,Dr. Okonkwo,Metro Community Hospital,2026-03-06,Acute kidney injury
+ENC-00098,P-0023,2026-04-23,ER,NP Simmons,Metro Community Hospital,2026-04-23,Shortness of breath
+ENC-00099,P-0023,2026-04-24,Inpatient,Dr. Patel,Metro Community Hospital,2026-04-26,Acute kidney injury
+ENC-00100,P-0023,2026-06-01,ER,Dr. Patel,Mercy General Hospital,2026-06-01,Chest pain
+ENC-00101,P-0023,2026-07-08,Inpatient,Dr. Okonkwo,St. Luke's Medical Center,2026-07-13,Pneumonia
+ENC-00102,P-0024,2026-01-23,Telehealth,Dr. Rivera,St. Luke's Medical Center,,Medication review
+ENC-00103,P-0024,2026-01-25,Inpatient,Dr. Thompson,St. Luke's Medical Center,2026-01-30,Acute kidney injury
+ENC-00104,P-0024,2026-05-06,ER,Dr. Kim,St. Luke's Medical Center,2026-05-06,Severe headache
+ENC-00105,P-0024,2026-07-25,Inpatient,Dr. Rivera,Metro Community Hospital,2026-07-30,Pneumonia
+ENC-00106,P-0025,2026-02-20,ER,Dr. Kim,Metro Community Hospital,2026-02-20,Chest pain
+ENC-00107,P-0025,2026-04-15,Inpatient,Dr. Chen,Valley Health Clinic,2026-04-17,Acute kidney injury
+ENC-00108,P-0025,2026-06-13,Telehealth,Dr. Thompson,St. Luke's Medical Center,,Follow-up
+ENC-00109,P-0025,2026-08-29,ER,Dr. Rivera,Metro Community Hospital,2026-08-29,Shortness of breath

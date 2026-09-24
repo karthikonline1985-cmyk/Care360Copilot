@@ -1,0 +1,105 @@
+-- ============================================================
+-- Care360 Copilot — Validation Queries
+-- Run after loading CSVs to verify data integrity.
+-- ============================================================
+
+-- 1. Row counts (expected ranges in comments)
+SELECT 'PATIENTS'    AS TBL, COUNT(*) AS ROW_COUNT FROM CARE360_DB.RAW.PATIENTS      -- expect 25
+UNION ALL
+SELECT 'ENCOUNTERS',        COUNT(*) FROM CARE360_DB.RAW.ENCOUNTERS                  -- expect ~100
+UNION ALL
+SELECT 'DIAGNOSES',         COUNT(*) FROM CARE360_DB.RAW.DIAGNOSES                   -- expect ~80
+UNION ALL
+SELECT 'MEDICATIONS',       COUNT(*) FROM CARE360_DB.RAW.MEDICATIONS                 -- expect ~80
+UNION ALL
+SELECT 'LAB_RESULTS',       COUNT(*) FROM CARE360_DB.RAW.LAB_RESULTS                 -- expect ~200
+UNION ALL
+SELECT 'CLAIMS',            COUNT(*) FROM CARE360_DB.RAW.CLAIMS                      -- expect ~150
+ORDER BY TBL;
+
+-- 2. Referential integrity: encounters → patients
+SELECT 'Orphan encounters' AS CHECK_NAME, COUNT(*) AS VIOLATIONS
+FROM CARE360_DB.RAW.ENCOUNTERS e
+LEFT JOIN CARE360_DB.RAW.PATIENTS p ON e.PATIENT_ID = p.PATIENT_ID
+WHERE p.PATIENT_ID IS NULL;
+
+-- 3. Referential integrity: diagnoses → patients & encounters
+SELECT 'Orphan diagnoses (patient)' AS CHECK_NAME, COUNT(*) AS VIOLATIONS
+FROM CARE360_DB.RAW.DIAGNOSES d
+LEFT JOIN CARE360_DB.RAW.PATIENTS p ON d.PATIENT_ID = p.PATIENT_ID
+WHERE p.PATIENT_ID IS NULL
+UNION ALL
+SELECT 'Orphan diagnoses (encounter)', COUNT(*)
+FROM CARE360_DB.RAW.DIAGNOSES d
+LEFT JOIN CARE360_DB.RAW.ENCOUNTERS e ON d.ENCOUNTER_ID = e.ENCOUNTER_ID
+WHERE e.ENCOUNTER_ID IS NULL;
+
+-- 4. Referential integrity: medications → patients
+SELECT 'Orphan medications' AS CHECK_NAME, COUNT(*) AS VIOLATIONS
+FROM CARE360_DB.RAW.MEDICATIONS m
+LEFT JOIN CARE360_DB.RAW.PATIENTS p ON m.PATIENT_ID = p.PATIENT_ID
+WHERE p.PATIENT_ID IS NULL;
+
+-- 5. Referential integrity: labs → patients & encounters
+SELECT 'Orphan labs (patient)' AS CHECK_NAME, COUNT(*) AS VIOLATIONS
+FROM CARE360_DB.RAW.LAB_RESULTS l
+LEFT JOIN CARE360_DB.RAW.PATIENTS p ON l.PATIENT_ID = p.PATIENT_ID
+WHERE p.PATIENT_ID IS NULL
+UNION ALL
+SELECT 'Orphan labs (encounter)', COUNT(*)
+FROM CARE360_DB.RAW.LAB_RESULTS l
+LEFT JOIN CARE360_DB.RAW.ENCOUNTERS e ON l.ENCOUNTER_ID = e.ENCOUNTER_ID
+WHERE e.ENCOUNTER_ID IS NULL;
+
+-- 6. Referential integrity: claims → patients
+SELECT 'Orphan claims' AS CHECK_NAME, COUNT(*) AS VIOLATIONS
+FROM CARE360_DB.RAW.CLAIMS c
+LEFT JOIN CARE360_DB.RAW.PATIENTS p ON c.PATIENT_ID = p.PATIENT_ID
+WHERE p.PATIENT_ID IS NULL;
+
+-- 7. Demo scenario spot-checks
+-- Scenario 1: P-0001 should have CKD + Ibuprofen + rising creatinine
+SELECT 'Scenario 1: CKD patient on ibuprofen' AS CHECK_NAME,
+       COUNT(*) AS MATCHES
+FROM CARE360_DB.RAW.DIAGNOSES d
+JOIN CARE360_DB.RAW.MEDICATIONS m ON d.PATIENT_ID = m.PATIENT_ID
+WHERE d.PATIENT_ID = 'P-0001'
+  AND d.ICD10_CODE LIKE 'N18%'
+  AND m.DRUG_NAME = 'Ibuprofen'
+  AND m.IS_ACTIVE = TRUE;
+
+-- Scenario 2: P-0002 should have diabetes + A1c > 9
+SELECT 'Scenario 2: Diabetic with high A1c' AS CHECK_NAME,
+       COUNT(*) AS MATCHES
+FROM CARE360_DB.RAW.DIAGNOSES d
+JOIN CARE360_DB.RAW.LAB_RESULTS l ON d.PATIENT_ID = l.PATIENT_ID
+WHERE d.PATIENT_ID = 'P-0002'
+  AND d.ICD10_CODE LIKE 'E11%'
+  AND l.TEST_NAME = 'HbA1c'
+  AND l.RESULT_VALUE > 9.0;
+
+-- Scenario 3: P-0003 should have >= 3 ER visits and >= 8 active meds
+SELECT 'Scenario 3: Frequent ER visits' AS CHECK_NAME,
+       COUNT(*) AS MATCHES
+FROM CARE360_DB.RAW.ENCOUNTERS
+WHERE PATIENT_ID = 'P-0003'
+  AND ENCOUNTER_TYPE = 'ER';
+
+SELECT 'Scenario 3: Polypharmacy count' AS CHECK_NAME,
+       COUNT(*) AS MATCHES
+FROM CARE360_DB.RAW.MEDICATIONS
+WHERE PATIENT_ID = 'P-0003'
+  AND IS_ACTIVE = TRUE;
+
+-- 8. No null PKs
+SELECT 'Null PATIENT_ID'   AS CHECK_NAME, COUNT(*) AS VIOLATIONS FROM CARE360_DB.RAW.PATIENTS     WHERE PATIENT_ID IS NULL
+UNION ALL
+SELECT 'Null ENCOUNTER_ID',               COUNT(*)              FROM CARE360_DB.RAW.ENCOUNTERS    WHERE ENCOUNTER_ID IS NULL
+UNION ALL
+SELECT 'Null DIAGNOSIS_ID',               COUNT(*)              FROM CARE360_DB.RAW.DIAGNOSES     WHERE DIAGNOSIS_ID IS NULL
+UNION ALL
+SELECT 'Null MEDICATION_ID',              COUNT(*)              FROM CARE360_DB.RAW.MEDICATIONS   WHERE MEDICATION_ID IS NULL
+UNION ALL
+SELECT 'Null LAB_ID',                     COUNT(*)              FROM CARE360_DB.RAW.LAB_RESULTS   WHERE LAB_ID IS NULL
+UNION ALL
+SELECT 'Null CLAIM_ID',                   COUNT(*)              FROM CARE360_DB.RAW.CLAIMS        WHERE CLAIM_ID IS NULL;

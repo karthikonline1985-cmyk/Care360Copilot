@@ -1,0 +1,75 @@
+DIAGNOSIS_ID,ENCOUNTER_ID,PATIENT_ID,ICD10_CODE,DESCRIPTION,IS_PRIMARY,DIAGNOSED_DATE,STATUS
+DX-00001,ENC-00001,P-0001,N18.3,"Chronic kidney disease, stage 3",True,2026-03-05,Chronic
+DX-00002,ENC-00001,P-0001,I10,Essential hypertension,False,2026-03-05,Chronic
+DX-00003,ENC-00002,P-0001,M17.11,"Primary osteoarthritis, right knee",False,2026-05-14,Chronic
+DX-00004,ENC-00005,P-0002,E11.65,Type 2 diabetes mellitus with hyperglycemia,True,2026-02-10,Chronic
+DX-00005,ENC-00005,P-0002,I10,Essential hypertension,False,2026-02-10,Chronic
+DX-00006,ENC-00005,P-0002,I50.9,"Heart failure, unspecified",False,2026-02-10,Chronic
+DX-00007,ENC-00006,P-0002,E78.5,"Dyslipidemia, unspecified",False,2026-04-18,Chronic
+DX-00008,ENC-00006,P-0002,F32.1,"Major depressive disorder, moderate",False,2026-04-18,Active
+DX-00009,ENC-00007,P-0002,G47.33,Obstructive sleep apnea,False,2026-06-22,Chronic
+DX-00010,ENC-00010,P-0003,I50.9,"Heart failure, unspecified",True,2026-04-10,Chronic
+DX-00011,ENC-00010,P-0003,I48.91,"Atrial fibrillation, unspecified",False,2026-04-10,Chronic
+DX-00012,ENC-00010,P-0003,J44.1,COPD with acute exacerbation,False,2026-04-10,Active
+DX-00013,ENC-00010,P-0003,I10,Essential hypertension,False,2026-04-10,Chronic
+DX-00014,ENC-00011,P-0003,E03.9,"Hypothyroidism, unspecified",False,2026-07-05,Chronic
+DX-00015,ENC-00011,P-0003,D64.9,"Anemia, unspecified",False,2026-07-05,Active
+DX-00016,ENC-00012,P-0003,K21.0,GERD with esophagitis,False,2026-07-28,Active
+DX-00017,ENC-00013,P-0003,M54.5,Low back pain,False,2026-08-19,Active
+DX-00018,ENC-00015,P-0004,F32.1,"Major depressive disorder, moderate",True,2026-03-09,Active
+DX-00019,ENC-00016,P-0004,I25.10,Coronary artery disease,False,2026-05-16,Chronic
+DX-00020,ENC-00018,P-0005,I25.10,Coronary artery disease,True,2026-03-25,Chronic
+DX-00021,ENC-00019,P-0005,E78.5,"Dyslipidemia, unspecified",False,2026-04-01,Chronic
+DX-00022,ENC-00020,P-0005,F32.1,"Major depressive disorder, moderate",False,2026-07-31,Active
+DX-00023,ENC-00021,P-0006,I10,Essential hypertension,True,2026-02-17,Chronic
+DX-00024,ENC-00022,P-0006,K21.0,GERD with esophagitis,False,2026-04-26,Active
+DX-00025,ENC-00026,P-0007,E11.9,Type 2 diabetes mellitus without complications,True,2026-01-26,Chronic
+DX-00026,ENC-00027,P-0007,J44.1,COPD with acute exacerbation,False,2026-03-11,Active
+DX-00027,ENC-00031,P-0008,J45.20,"Mild intermittent asthma, uncomplicated",True,2026-06-22,Chronic
+DX-00028,ENC-00032,P-0008,N18.4,"Chronic kidney disease, stage 4",False,2026-07-14,Chronic
+DX-00029,ENC-00034,P-0009,K21.0,GERD with esophagitis,True,2026-01-28,Active
+DX-00030,ENC-00035,P-0009,M54.5,Low back pain,False,2026-02-13,Active
+DX-00031,ENC-00036,P-0009,E78.5,"Dyslipidemia, unspecified",False,2026-03-18,Chronic
+DX-00032,ENC-00039,P-0010,R51.9,"Headache, unspecified",True,2026-01-19,Active
+DX-00033,ENC-00040,P-0010,F32.1,"Major depressive disorder, moderate",False,2026-02-15,Active
+DX-00034,ENC-00044,P-0011,J18.9,"Pneumonia, unspecified organism",True,2026-02-11,Active
+DX-00035,ENC-00045,P-0011,E11.65,Type 2 diabetes mellitus with hyperglycemia,False,2026-06-18,Chronic
+DX-00036,ENC-00048,P-0012,M17.11,"Primary osteoarthritis, right knee",True,2026-03-09,Chronic
+DX-00037,ENC-00049,P-0012,I48.91,"Atrial fibrillation, unspecified",False,2026-03-31,Chronic
+DX-00038,ENC-00052,P-0013,D64.9,"Anemia, unspecified",True,2026-02-05,Active
+DX-00039,ENC-00053,P-0013,J18.9,"Pneumonia, unspecified organism",False,2026-04-17,Active
+DX-00040,ENC-00055,P-0014,M17.11,"Primary osteoarthritis, right knee",True,2026-01-31,Chronic
+DX-00041,ENC-00056,P-0014,E78.5,"Dyslipidemia, unspecified",False,2026-03-04,Chronic
+DX-00042,ENC-00060,P-0015,J45.20,"Mild intermittent asthma, uncomplicated",True,2026-02-28,Chronic
+DX-00043,ENC-00061,P-0015,I10,Essential hypertension,False,2026-05-29,Chronic
+DX-00044,ENC-00065,P-0016,I50.9,"Heart failure, unspecified",True,2026-05-25,Chronic
+DX-00045,ENC-00066,P-0016,E78.5,"Dyslipidemia, unspecified",False,2026-06-23,Chronic
+DX-00046,ENC-00067,P-0016,I48.91,"Atrial fibrillation, unspecified",False,2026-07-18,Chronic
+DX-00047,ENC-00068,P-0016,E03.9,"Hypothyroidism, unspecified",False,2026-07-29,Chronic
+DX-00048,ENC-00069,P-0017,J18.9,"Pneumonia, unspecified organism",True,2026-02-12,Active
+DX-00049,ENC-00070,P-0017,J44.1,COPD with acute exacerbation,False,2026-02-22,Active
+DX-00050,ENC-00074,P-0018,K21.0,GERD with esophagitis,True,2026-01-19,Active
+DX-00051,ENC-00075,P-0018,E03.9,"Hypothyroidism, unspecified",False,2026-02-02,Chronic
+DX-00052,ENC-00076,P-0018,J18.9,"Pneumonia, unspecified organism",False,2026-03-11,Active
+DX-00053,ENC-00079,P-0019,F32.1,"Major depressive disorder, moderate",True,2026-04-20,Active
+DX-00054,ENC-00080,P-0019,M54.5,Low back pain,False,2026-05-27,Active
+DX-00055,ENC-00083,P-0020,I10,Essential hypertension,True,2026-01-16,Chronic
+DX-00056,ENC-00084,P-0020,M17.11,"Primary osteoarthritis, right knee",False,2026-05-29,Chronic
+DX-00057,ENC-00085,P-0020,K21.0,GERD with esophagitis,False,2026-06-04,Active
+DX-00058,ENC-00088,P-0021,D64.9,"Anemia, unspecified",True,2026-03-13,Active
+DX-00059,ENC-00089,P-0021,R51.9,"Headache, unspecified",False,2026-03-18,Active
+DX-00060,ENC-00090,P-0021,F32.1,"Major depressive disorder, moderate",False,2026-06-13,Active
+DX-00061,ENC-00091,P-0021,E11.65,Type 2 diabetes mellitus with hyperglycemia,False,2026-06-17,Chronic
+DX-00062,ENC-00092,P-0022,E11.65,Type 2 diabetes mellitus with hyperglycemia,True,2026-01-26,Chronic
+DX-00063,ENC-00093,P-0022,N18.3,"Chronic kidney disease, stage 3",False,2026-04-26,Chronic
+DX-00064,ENC-00094,P-0022,G47.33,Obstructive sleep apnea,False,2026-04-30,Chronic
+DX-00065,ENC-00095,P-0022,D64.9,"Anemia, unspecified",False,2026-05-03,Active
+DX-00066,ENC-00097,P-0023,K21.0,GERD with esophagitis,True,2026-03-02,Active
+DX-00067,ENC-00098,P-0023,I10,Essential hypertension,False,2026-04-23,Chronic
+DX-00068,ENC-00099,P-0023,N18.4,"Chronic kidney disease, stage 4",False,2026-04-24,Chronic
+DX-00069,ENC-00100,P-0023,M54.5,Low back pain,False,2026-06-01,Active
+DX-00070,ENC-00102,P-0024,E11.65,Type 2 diabetes mellitus with hyperglycemia,True,2026-01-23,Chronic
+DX-00071,ENC-00103,P-0024,I48.91,"Atrial fibrillation, unspecified",False,2026-01-25,Chronic
+DX-00072,ENC-00104,P-0024,N18.3,"Chronic kidney disease, stage 3",False,2026-05-06,Chronic
+DX-00073,ENC-00106,P-0025,M54.5,Low back pain,True,2026-02-20,Active
+DX-00074,ENC-00107,P-0025,I48.91,"Atrial fibrillation, unspecified",False,2026-04-15,Chronic

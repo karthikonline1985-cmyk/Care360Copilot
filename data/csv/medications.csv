@@ -1,0 +1,78 @@
+MEDICATION_ID,PATIENT_ID,DRUG_NAME,NDC_CODE,DOSAGE,FREQUENCY,ROUTE,PRESCRIBER,START_DATE,END_DATE,IS_ACTIVE
+MED-00001,P-0001,Lisinopril,00378-2115-01,20mg,Once daily,Oral,Dr. Rivera,2025-01-10,,True
+MED-00002,P-0001,Atorvastatin,00378-3953-01,40mg,Once daily,Oral,Dr. Rivera,2025-03-20,,True
+MED-00003,P-0001,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,Dr. Chen,2026-05-14,,True
+MED-00004,P-0002,Metformin,00378-7252-01,1000mg,Twice daily,Oral,Dr. Okonkwo,2024-06-01,,True
+MED-00005,P-0002,Insulin Glargine,00088-5020-01,30 units,Once daily,Subcutaneous,NP Blake,2025-02-15,,True
+MED-00006,P-0002,Lisinopril,00378-2115-01,20mg,Once daily,Oral,Dr. Patel,2024-06-01,,True
+MED-00007,P-0002,Atorvastatin,00378-3953-01,40mg,Once daily,Oral,Dr. Chen,2024-08-10,,True
+MED-00008,P-0002,Carvedilol,00378-3635-01,25mg,Twice daily,Oral,Dr. Patel,2025-05-01,,True
+MED-00009,P-0002,Sertraline,00378-4187-01,100mg,Once daily,Oral,Dr. Okonkwo,2025-09-20,,True
+MED-00010,P-0003,Furosemide,00378-0206-01,40mg,Twice daily,Oral,Dr. Rivera,2024-03-01,,True
+MED-00011,P-0003,Carvedilol,00378-3635-01,25mg,Twice daily,Oral,Dr. Thompson,2024-03-01,,True
+MED-00012,P-0003,Apixaban,00003-0894-21,5mg,Twice daily,Oral,NP Simmons,2024-06-10,,True
+MED-00013,P-0003,Lisinopril,00378-2115-01,20mg,Once daily,Oral,Dr. Kim,2024-03-01,,True
+MED-00014,P-0003,Amlodipine,00378-0097-01,10mg,Once daily,Oral,NP Blake,2024-09-15,,True
+MED-00015,P-0003,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,NP Blake,2025-01-05,,True
+MED-00016,P-0003,Omeprazole,00378-6150-01,20mg,Once daily,Oral,Dr. Patel,2025-03-20,,True
+MED-00017,P-0003,Gabapentin,00378-4011-01,300mg,Three times daily,Oral,Dr. Rivera,2025-07-10,,True
+MED-00018,P-0003,Albuterol,00173-0682-20,2 puffs,As needed,Inhalation,Dr. Rivera,2025-08-01,,True
+MED-00019,P-0004,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,Dr. Chen,2025-12-21,,True
+MED-00020,P-0004,Warfarin,00378-2074-01,5mg,Once daily,Oral,Dr. Thompson,2025-11-14,,True
+MED-00021,P-0004,Apixaban,00003-0894-21,5mg,Twice daily,Oral,Dr. Thompson,2025-11-10,2026-01-13,False
+MED-00022,P-0005,Metformin,00378-7252-01,1000mg,Twice daily,Oral,Dr. Patel,2025-02-12,,True
+MED-00023,P-0005,Furosemide,00378-0206-01,40mg,Twice daily,Oral,NP Simmons,2026-03-02,,True
+MED-00024,P-0006,Warfarin,00378-2074-01,5mg,Once daily,Oral,NP Blake,2025-07-26,,True
+MED-00025,P-0006,Clopidogrel,00378-5200-01,75mg,Once daily,Oral,NP Simmons,2025-09-19,,True
+MED-00026,P-0007,Omeprazole,00378-6150-01,20mg,Once daily,Oral,NP Blake,2025-11-16,2026-02-09,False
+MED-00027,P-0007,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Kim,2025-12-17,,True
+MED-00028,P-0008,Insulin Glargine,00088-5020-01,30 units,Once daily,Subcutaneous,Dr. Rivera,2025-05-15,,True
+MED-00029,P-0008,Albuterol,00173-0682-20,2 puffs,As needed,Inhalation,NP Blake,2025-12-08,,True
+MED-00030,P-0009,Insulin Glargine,00088-5020-01,30 units,Once daily,Subcutaneous,NP Blake,2025-12-24,,True
+MED-00031,P-0009,Sertraline,00378-4187-01,100mg,Once daily,Oral,Dr. Thompson,2024-03-13,,True
+MED-00032,P-0010,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,Dr. Rivera,2025-07-19,,True
+MED-00033,P-0010,Sertraline,00378-4187-01,100mg,Once daily,Oral,NP Blake,2026-05-11,,True
+MED-00034,P-0010,Apixaban,00003-0894-21,5mg,Twice daily,Oral,Dr. Okonkwo,2024-04-30,,True
+MED-00035,P-0010,Metformin,00378-7252-01,1000mg,Twice daily,Oral,Dr. Thompson,2025-05-25,,True
+MED-00036,P-0011,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,NP Simmons,2024-05-29,,True
+MED-00037,P-0011,Acetaminophen,00904-1982-60,500mg,Every 6 hours,Oral,Dr. Okonkwo,2025-08-02,,True
+MED-00038,P-0011,Albuterol,00173-0682-20,2 puffs,As needed,Inhalation,Dr. Rivera,2024-06-23,2024-10-28,False
+MED-00039,P-0012,Warfarin,00378-2074-01,5mg,Once daily,Oral,Dr. Thompson,2025-11-19,,True
+MED-00040,P-0012,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,Dr. Kim,2025-08-21,,True
+MED-00041,P-0013,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,Dr. Patel,2024-02-23,2024-07-09,False
+MED-00042,P-0013,Carvedilol,00378-3635-01,25mg,Twice daily,Oral,Dr. Kim,2026-02-02,2026-06-26,False
+MED-00043,P-0014,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,NP Simmons,2024-05-26,,True
+MED-00044,P-0014,Metformin,00378-7252-01,1000mg,Twice daily,Oral,Dr. Patel,2024-03-12,2024-04-18,False
+MED-00045,P-0014,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,NP Simmons,2026-02-03,,True
+MED-00046,P-0015,Clopidogrel,00378-5200-01,75mg,Once daily,Oral,Dr. Okonkwo,2026-01-14,,True
+MED-00047,P-0015,Furosemide,00378-0206-01,40mg,Twice daily,Oral,Dr. Rivera,2024-08-29,2024-12-02,False
+MED-00048,P-0015,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,Dr. Patel,2024-06-26,,True
+MED-00049,P-0015,Apixaban,00003-0894-21,5mg,Twice daily,Oral,NP Blake,2024-06-30,,True
+MED-00050,P-0016,Gabapentin,00378-4011-01,300mg,Three times daily,Oral,Dr. Kim,2025-10-23,,True
+MED-00051,P-0016,Omeprazole,00378-6150-01,20mg,Once daily,Oral,Dr. Okonkwo,2024-01-19,,True
+MED-00052,P-0016,Clopidogrel,00378-5200-01,75mg,Once daily,Oral,NP Blake,2024-08-07,,True
+MED-00053,P-0016,Atorvastatin,00378-3953-01,40mg,Once daily,Oral,Dr. Okonkwo,2024-07-15,,True
+MED-00054,P-0017,Lisinopril,00378-2115-01,20mg,Once daily,Oral,Dr. Okonkwo,2026-04-29,,True
+MED-00055,P-0017,Sertraline,00378-4187-01,100mg,Once daily,Oral,NP Blake,2026-02-16,,True
+MED-00056,P-0018,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Thompson,2025-01-11,,True
+MED-00057,P-0018,Acetaminophen,00904-1982-60,500mg,Every 6 hours,Oral,Dr. Patel,2026-03-31,2026-08-16,False
+MED-00058,P-0019,Ibuprofen,00904-5852-60,400mg,Three times daily,Oral,Dr. Okonkwo,2025-08-09,,True
+MED-00059,P-0019,Apixaban,00003-0894-21,5mg,Twice daily,Oral,Dr. Patel,2025-09-18,,True
+MED-00060,P-0020,Omeprazole,00378-6150-01,20mg,Once daily,Oral,NP Simmons,2024-02-21,,True
+MED-00061,P-0020,Amlodipine,00378-0097-01,10mg,Once daily,Oral,Dr. Okonkwo,2025-09-22,,True
+MED-00062,P-0021,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Rivera,2024-05-31,,True
+MED-00063,P-0021,Levothyroxine,00378-1800-01,75mcg,Once daily,Oral,Dr. Patel,2024-02-02,,True
+MED-00064,P-0021,Clopidogrel,00378-5200-01,75mg,Once daily,Oral,NP Simmons,2024-07-14,2024-11-01,False
+MED-00065,P-0021,Prednisone,00378-0542-01,10mg,Once daily,Oral,Dr. Rivera,2024-06-04,,True
+MED-00066,P-0022,Prednisone,00378-0542-01,10mg,Once daily,Oral,Dr. Thompson,2024-07-09,,True
+MED-00067,P-0022,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Patel,2024-02-08,2024-08-01,False
+MED-00068,P-0023,Clopidogrel,00378-5200-01,75mg,Once daily,Oral,NP Simmons,2026-04-08,2026-06-10,False
+MED-00069,P-0023,Warfarin,00378-2074-01,5mg,Once daily,Oral,NP Blake,2025-04-12,,True
+MED-00070,P-0024,Albuterol,00173-0682-20,2 puffs,As needed,Inhalation,NP Simmons,2024-12-18,,True
+MED-00071,P-0024,Apixaban,00003-0894-21,5mg,Twice daily,Oral,NP Simmons,2026-03-15,,True
+MED-00072,P-0024,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Okonkwo,2025-02-22,2025-06-28,False
+MED-00073,P-0024,Lisinopril,00378-2115-01,20mg,Once daily,Oral,Dr. Rivera,2026-02-11,,True
+MED-00074,P-0025,Gabapentin,00378-4011-01,300mg,Three times daily,Oral,Dr. Okonkwo,2025-04-16,2025-08-14,False
+MED-00075,P-0025,Carvedilol,00378-3635-01,25mg,Twice daily,Oral,NP Blake,2024-05-23,,True
+MED-00076,P-0025,Hydrochlorothiazide,00378-0241-01,25mg,Once daily,Oral,Dr. Chen,2024-07-07,,True
+MED-00077,P-0025,Apixaban,00003-0894-21,5mg,Twice daily,Oral,Dr. Chen,2025-06-20,2025-08-08,False
