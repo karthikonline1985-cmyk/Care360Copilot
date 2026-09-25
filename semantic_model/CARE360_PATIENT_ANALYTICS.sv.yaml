@@ -1,0 +1,185 @@
+name: CARE360_PATIENT_ANALYTICS
+description: "Care360 Patient Analytics semantic view for the Care360 Copilot hackathon MVP. Covers patient demographics, clinical summaries, transparent rule-based risk stratification (not ML predictions), and verified queries for common population health questions. All data is synthetic."
+tables:
+  - name: PATIENT_360_SUMMARY
+    base_table:
+      database: CARE360_DB
+      schema: CURATED
+      table: PATIENT_360_SUMMARY
+    primary_key:
+      columns:
+        - PATIENT_ID
+    dimensions:
+      - name: ACTIVE_MED_COUNT
+        expr: ACTIVE_MED_COUNT
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: AGE
+        expr: AGE
+        data_type: "NUMBER(9,0)"
+        access_modifier: public_access
+      - name: DIAGNOSIS_COUNT
+        expr: DIAGNOSIS_COUNT
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: ENCOUNTER_COUNT
+        expr: ENCOUNTER_COUNT
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: ER_VISITS_LAST_90D
+        expr: ER_VISITS_LAST_90D
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: GENDER
+        expr: GENDER
+        data_type: VARCHAR(10)
+        access_modifier: public_access
+      - name: INSURANCE_TYPE
+        expr: INSURANCE_TYPE
+        data_type: VARCHAR(20)
+        access_modifier: public_access
+      - name: PATIENT_ID
+        expr: PATIENT_ID
+        data_type: VARCHAR(10)
+        access_modifier: public_access
+      - name: PATIENT_NAME
+        expr: PATIENT_NAME
+        data_type: VARCHAR(101)
+        access_modifier: public_access
+    facts:
+      - name: LATEST_CREATININE
+        expr: LATEST_CREATININE
+        data_type: FLOAT
+        access_modifier: public_access
+      - name: LATEST_HBA1C
+        expr: LATEST_HBA1C
+        data_type: FLOAT
+        access_modifier: public_access
+    time_dimensions:
+      - name: LATEST_ENCOUNTER_DATE
+        expr: LATEST_ENCOUNTER_DATE
+        data_type: DATE
+        access_modifier: public_access
+  - name: PATIENT_RISK_SCORES
+    base_table:
+      database: CARE360_DB
+      schema: CURATED
+      table: PATIENT_RISK_SCORES
+    primary_key:
+      columns:
+        - PATIENT_ID
+    dimensions:
+      - name: ACTIVE_MED_COUNT
+        expr: ACTIVE_MED_COUNT
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: AGE
+        expr: AGE
+        data_type: "NUMBER(9,0)"
+        access_modifier: public_access
+      - name: DIAGNOSIS_COUNT
+        expr: DIAGNOSIS_COUNT
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: ER_VISITS_LAST_90D
+        expr: ER_VISITS_LAST_90D
+        data_type: "NUMBER(18,0)"
+        access_modifier: public_access
+      - name: FLAG_ELDERLY
+        expr: FLAG_ELDERLY
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: FLAG_FREQUENT_ER
+        expr: FLAG_FREQUENT_ER
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: FLAG_MULTIMORBIDITY
+        expr: FLAG_MULTIMORBIDITY
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: FLAG_POLYPHARMACY
+        expr: FLAG_POLYPHARMACY
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: FLAG_RENAL_RISK
+        expr: FLAG_RENAL_RISK
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: FLAG_UNCONTROLLED_DIABETES
+        expr: FLAG_UNCONTROLLED_DIABETES
+        data_type: "NUMBER(1,0)"
+        access_modifier: public_access
+      - name: GENDER
+        expr: GENDER
+        data_type: VARCHAR(10)
+        access_modifier: public_access
+      - name: INSURANCE_TYPE
+        expr: INSURANCE_TYPE
+        data_type: VARCHAR(20)
+        access_modifier: public_access
+      - name: PATIENT_ID
+        expr: PATIENT_ID
+        data_type: VARCHAR(10)
+        access_modifier: public_access
+      - name: PATIENT_NAME
+        expr: PATIENT_NAME
+        data_type: VARCHAR(101)
+        access_modifier: public_access
+      - name: RISK_EXPLANATION
+        expr: RISK_EXPLANATION
+        data_type: VARCHAR(134217728)
+        access_modifier: public_access
+      - name: RISK_SCORE
+        expr: RISK_SCORE
+        data_type: "NUMBER(6,0)"
+        access_modifier: public_access
+      - name: RISK_TIER
+        expr: RISK_TIER
+        data_type: VARCHAR(8)
+        access_modifier: public_access
+    facts:
+      - name: LATEST_CREATININE
+        expr: LATEST_CREATININE
+        data_type: FLOAT
+        access_modifier: public_access
+      - name: LATEST_HBA1C
+        expr: LATEST_HBA1C
+        data_type: FLOAT
+        access_modifier: public_access
+verified_queries:
+  - name: '"0;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, RISK_SCORE, RISK_TIER, RISK_EXPLANATION FROM patient_risk_scores WHERE RISK_TIER = 'HIGH' ORDER BY RISK_SCORE DESC"
+    question: Which patients are high risk?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"1;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, ER_VISITS_LAST_90D, RISK_TIER FROM patient_risk_scores WHERE FLAG_FREQUENT_ER = 1 ORDER BY ER_VISITS_LAST_90D DESC"
+    question: Which patients have frequent emergency room visits?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"2;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, LATEST_HBA1C, RISK_TIER FROM patient_risk_scores WHERE FLAG_UNCONTROLLED_DIABETES = 1 ORDER BY LATEST_HBA1C DESC"
+    question: Which patients have uncontrolled diabetes?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"3;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, LATEST_CREATININE, RISK_TIER FROM patient_risk_scores WHERE FLAG_RENAL_RISK = 1 ORDER BY LATEST_CREATININE DESC"
+    question: Which patients have renal risk and what are their creatinine levels and risk tiers?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"4;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, ACTIVE_MED_COUNT, RISK_TIER FROM patient_risk_scores WHERE FLAG_POLYPHARMACY = 1 ORDER BY ACTIVE_MED_COUNT DESC"
+    question: Which patients have polypharmacy and what are their medication counts and risk levels?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
+  - name: '"5;1"'
+    sql: "SELECT PATIENT_ID, PATIENT_NAME, RISK_SCORE, RISK_TIER, ER_VISITS_LAST_90D, RISK_EXPLANATION FROM patient_risk_scores WHERE RISK_TIER = 'HIGH' AND FLAG_FREQUENT_ER = 1 ORDER BY RISK_SCORE DESC"
+    question: Which high-risk patients have been frequent emergency room visitors in the last 90 days?
+    verified_at: 1790254031
+    verified_by: Semantic Model Generator
+    use_as_onboarding_question: false
