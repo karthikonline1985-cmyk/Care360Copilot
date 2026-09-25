@@ -116,7 +116,7 @@ def load_diagnoses(patient_id):
 def load_medications(patient_id):
     return query_dataframe(
         """
-        SELECT MED_ID, DRUG_NAME, NDC_CODE, START_DATE, END_DATE, PRESCRIBER
+        SELECT MEDICATION_ID, DRUG_NAME, NDC_CODE, START_DATE, END_DATE, PRESCRIBER
         FROM CARE360_DB.RAW.MEDICATIONS
         WHERE PATIENT_ID = %s
         ORDER BY START_DATE DESC
