@@ -155,6 +155,9 @@ def display_value(value, decimals=None):
             return "N/A"
         if decimals is not None:
             return round(value, decimals)
+    # Convert dates / timestamps / other unsupported objects to string
+    if not isinstance(value, (str, int, float)):
+        return str(value)
     return value
 
 def risk_badge(tier):
