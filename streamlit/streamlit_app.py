@@ -1,21 +1,29 @@
+import json
+import math
+import pandas as pd
 import streamlit as st
 import snowflake.connector
 from cryptography.hazmat.primitives import serialization
-import json
-import math
-import streamlit as st
 
-st.set_page_config(page_title="Care360 Copilot", page_icon="🏥", layout="wide")
+# ============================================================
+# PAGE CONFIG
+# ============================================================
+st.set_page_config(
+    page_title="Care360 Copilot",
+    page_icon="\U0001f3e5",
+    layout="wide",
+)
 
-
-def fmt_num(val, decimals=1):
-    """Format a numeric value, returning 'N/A' for None/NaN."""
-    if val is None or (isinstance(val, float) and math.isnan(val)):
-        return "N/A"
-    return f"{val:.{decimals}f}"
-
+# ============================================================
+# SNOWFLAKE CONNECTION
+# ============================================================
 @st.cache_resource
 def get_connection():
+    """
+    Create a Snowflake connection using RSA key-pair authentication.
+    Credentials are read from Streamlit Community Cloud Secrets.
+    Nothing sensitive is stored in GitHub.
+    """
     private_key_pem = st.secrets["snowflake"]["private_key"]
     private_key = serialization.load_pem_private_key(
         private_key_pem.encode("utf-8"),
@@ -39,212 +47,598 @@ def get_connection():
 
 conn = get_connection()
 
+# ============================================================
+# DATABASE HELPERS
+# ============================================================
+def query_dataframe(sql, params=None):
+    """
+    Execute a parameterized Snowflake query and return a pandas DataFrame.
+    """
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql, params or ())
+        rows = cursor.fetchall()
+        columns = [column[0] for column in cursor.description]
+        return pd.DataFrame(rows, columns=columns)
+    finally:
+        cursor.close()
 
-# ── Data loaders ─────────────────────────────────────────────────
+def execute_scalar(sql, params=None):
+    """
+    Execute a query expected to return one value.
+    """
+    cursor = conn.cursor()
+    try:
+        cursor.execute(sql, params or ())
+        row = cursor.fetchone()
+        if row:
+            return row[0]
+        return None
+    finally:
+        cursor.close()
 
+# ============================================================
+# DATA LOADERS
+# ============================================================
 @st.cache_data(ttl=300)
 def load_patients():
-    return conn.query("SELECT * FROM CARE360_DB.CURATED.PATIENT_360_SUMMARY ORDER BY PATIENT_ID")
-
+    return query_dataframe(
+        """
+        SELECT *
+        FROM CARE360_DB.CURATED.PATIENT_360_SUMMARY
+        ORDER BY PATIENT_NAME
+        """
+    )
 
 @st.cache_data(ttl=300)
 def load_risk_scores():
-    return conn.query("SELECT * FROM CARE360_DB.CURATED.PATIENT_RISK_SCORES ORDER BY RISK_SCORE DESC, PATIENT_ID")
+    return query_dataframe(
+        """
+        SELECT *
+        FROM CARE360_DB.CURATED.PATIENT_RISK_SCORES
+        ORDER BY PATIENT_ID
+        """
+    )
 
+@st.cache_data(ttl=300)
+def load_diagnoses(patient_id):
+    return query_dataframe(
+        """
+        SELECT DIAGNOSIS_ID, ICD10_CODE, DESCRIPTION, IS_PRIMARY
+        FROM CARE360_DB.RAW.DIAGNOSES
+        WHERE PATIENT_ID = %s
+        ORDER BY IS_PRIMARY DESC, DESCRIPTION
+        """,
+        (patient_id,),
+    )
+
+@st.cache_data(ttl=300)
+def load_medications(patient_id):
+    return query_dataframe(
+        """
+        SELECT MED_ID, DRUG_NAME, NDC_CODE, START_DATE, END_DATE, PRESCRIBER
+        FROM CARE360_DB.RAW.MEDICATIONS
+        WHERE PATIENT_ID = %s
+        ORDER BY START_DATE DESC
+        """,
+        (patient_id,),
+    )
 
 @st.cache_data(ttl=300)
 def load_timeline(patient_id):
-    return conn.query(
-        "SELECT EVENT_DATE, EVENT_TYPE, EVENT_SUMMARY, SOURCE_ID "
-        "FROM CARE360_DB.CURATED.PATIENT_TIMELINE WHERE PATIENT_ID = ? "
-        "ORDER BY EVENT_DATE DESC, EVENT_TYPE",
-        params=[patient_id],
+    return query_dataframe(
+        """
+        SELECT EVENT_DATE, EVENT_TYPE, EVENT_SUMMARY, SOURCE_ID
+        FROM CARE360_DB.CURATED.PATIENT_TIMELINE
+        WHERE PATIENT_ID = %s
+        ORDER BY EVENT_DATE DESC
+        """,
+        (patient_id,),
     )
 
+# ============================================================
+# HELPERS
+# ============================================================
+def display_value(value, decimals=None):
+    """
+    Convert null / NaN values to N/A for clean UI display.
+    """
+    if value is None:
+        return "N/A"
+    try:
+        if pd.isna(value):
+            return "N/A"
+    except Exception:
+        pass
+    if isinstance(value, float):
+        if math.isnan(value):
+            return "N/A"
+        if decimals is not None:
+            return round(value, decimals)
+    return value
 
-# ── Sidebar ──────────────────────────────────────────────────────
+def risk_badge(tier):
+    tier = str(tier).upper()
+    if tier == "HIGH":
+        return "\U0001f534 HIGH"
+    if tier == "MODERATE":
+        return "\U0001f7e0 MODERATE"
+    return "\U0001f7e2 LOW"
 
-patients_df = load_patients()
-risk_df = load_risk_scores()
+def flag_display(value):
+    return "\u2705 Triggered" if int(value or 0) == 1 else "\u2796 Not triggered"
 
+# ============================================================
+# LOAD BASE DATA
+# ============================================================
+try:
+    patients_df = load_patients()
+    risk_df = load_risk_scores()
+except Exception as exc:
+    st.error(
+        "Unable to connect to the Care360 Snowflake data."
+    )
+    st.exception(exc)
+    st.stop()
+
+if patients_df.empty:
+    st.error("No synthetic patients were found.")
+    st.stop()
+
+# ============================================================
+# SIDEBAR
+# ============================================================
 with st.sidebar:
-    st.title("Care360 Copilot")
-    st.caption("Hackathon MVP — Patient & Member 360")
+    st.title("\U0001f3e5 Care360 Copilot")
+    st.caption(
+        "Evidence-based Patient 360 and Clinical Document Copilot"
+    )
+    st.divider()
 
     patient_options = {
         f"{row['PATIENT_NAME']} ({row['PATIENT_ID']})": row["PATIENT_ID"]
         for _, row in patients_df.iterrows()
     }
-    selected_label = st.selectbox("Select patient", list(patient_options.keys()))
+    selected_label = st.selectbox(
+        "Select patient",
+        list(patient_options.keys()),
+    )
     selected_pid = patient_options[selected_label]
-
-    st.markdown(f"**Patient ID:** `{selected_pid}`")
+    st.caption(f"Patient ID: `{selected_pid}`")
 
     st.divider()
     st.warning(
-        "**Synthetic data only.** All patient names, IDs, providers, "
-        "facilities, and clinical details are entirely fictional.",
-        icon="⚠️",
+        "\u26a0\ufe0f **Synthetic Demo Data**\n\n"
+        "All patient identities, providers, facilities and "
+        "clinical information in this application are fictional."
     )
     st.info(
-        "**Not medical advice.** This tool is for informational and demo "
-        "purposes only. It is not a substitute for professional medical judgment.",
-        icon="ℹ️",
+        "\u2139\ufe0f **Not medical advice.** "
+        "This prototype is for informational and demonstration "
+        "purposes only and is not a substitute for professional "
+        "medical judgment."
     )
 
-# ── Patient data ─────────────────────────────────────────────────
+# ============================================================
+# SELECT PATIENT
+# ============================================================
+patient_match = patients_df[
+    patients_df["PATIENT_ID"] == selected_pid
+]
+risk_match = risk_df[
+    risk_df["PATIENT_ID"] == selected_pid
+]
 
-pat = patients_df[patients_df["PATIENT_ID"] == selected_pid].iloc[0]
-risk = risk_df[risk_df["PATIENT_ID"] == selected_pid].iloc[0]
+if patient_match.empty or risk_match.empty:
+    st.error("Unable to locate the selected patient.")
+    st.stop()
 
-tier_color = {"HIGH": "red", "MODERATE": "orange", "LOW": "green"}.get(risk["RISK_TIER"], "gray")
+patient = patient_match.iloc[0]
+risk = risk_match.iloc[0]
 
-st.markdown(
-    f"### {pat['PATIENT_NAME']}  \n"
-    f"**Age:** {pat['AGE']} · **Gender:** {pat['GENDER']} · "
-    f"**Insurance:** {pat['INSURANCE_TYPE']} · "
-    f"**Latest encounter:** {pat['LATEST_ENCOUNTER_DATE']} · "
-    f"**Risk:** :{tier_color}[{risk['RISK_TIER']}]"
+# ============================================================
+# HEADER
+# ============================================================
+st.title(patient["PATIENT_NAME"])
+
+header_cols = st.columns(6)
+header_cols[0].metric(
+    "Age",
+    display_value(patient["AGE"]),
+)
+header_cols[1].metric(
+    "Gender",
+    display_value(patient["GENDER"]),
+)
+header_cols[2].metric(
+    "Insurance",
+    display_value(patient["INSURANCE_TYPE"]),
+)
+header_cols[3].metric(
+    "Latest Encounter",
+    display_value(patient["LATEST_ENCOUNTER_DATE"]),
+)
+header_cols[4].metric(
+    "Risk Score",
+    f"{display_value(risk['RISK_SCORE'])}/6",
+)
+header_cols[5].metric(
+    "Risk Tier",
+    risk_badge(risk["RISK_TIER"]),
 )
 
-# ── Tabs ─────────────────────────────────────────────────────────
+st.divider()
 
-tab1, tab2, tab3, tab4 = st.tabs(
-    ["Patient 360", "Risk Stratification", "Timeline", "Ask Care360"]
+# ============================================================
+# TABS
+# ============================================================
+tab_patient, tab_risk, tab_timeline, tab_ask = st.tabs(
+    [
+        "Patient 360",
+        "Risk Stratification",
+        "Timeline",
+        "Ask Care360",
+    ]
 )
 
-# ── Tab 1: Patient 360 ──────────────────────────────────────────
+# ============================================================
+# TAB 1 - PATIENT 360
+# ============================================================
+with tab_patient:
+    st.subheader("Patient 360")
 
-with tab1:
-    cols = st.columns(6, gap="medium")
-    cols[0].metric("Encounters", int(pat["ENCOUNTER_COUNT"]))
-    cols[1].metric("Active Meds", int(pat["ACTIVE_MED_COUNT"]))
-    cols[2].metric("Diagnoses", int(pat["DIAGNOSIS_COUNT"]))
-    cols[3].metric("HbA1c (%)", fmt_num(pat["LATEST_HBA1C"]))
-    cols[4].metric("Creatinine", fmt_num(pat["LATEST_CREATININE"]))
-    cols[5].metric("ER (90 days)", int(pat["ER_VISITS_LAST_90D"]))
+    metric_cols = st.columns(6)
+    metric_cols[0].metric(
+        "Encounters",
+        display_value(patient["ENCOUNTER_COUNT"]),
+    )
+    metric_cols[1].metric(
+        "Active Medications",
+        display_value(patient["ACTIVE_MED_COUNT"]),
+    )
+    metric_cols[2].metric(
+        "Diagnoses",
+        display_value(patient["DIAGNOSIS_COUNT"]),
+    )
+    metric_cols[3].metric(
+        "Latest HbA1c (%)",
+        display_value(
+            patient["LATEST_HBA1C"],
+            1,
+        ),
+    )
+    metric_cols[4].metric(
+        "Latest Creatinine (mg/dL)",
+        display_value(
+            patient["LATEST_CREATININE"],
+            2,
+        ),
+    )
+    metric_cols[5].metric(
+        "ER Visits (90 days)",
+        display_value(
+            patient["ER_VISITS_LAST_90D"]
+        ),
+    )
 
     st.divider()
+    left, right = st.columns(2)
 
-    c1, c2 = st.columns(2)
-    with c1:
-        st.subheader("Active Diagnoses")
-        dx_df = conn.query(
-            "SELECT ICD10_CODE, DESCRIPTION, STATUS, DIAGNOSED_DATE "
-            "FROM CARE360_DB.RAW.DIAGNOSES WHERE PATIENT_ID = ? ORDER BY DIAGNOSED_DATE DESC",
-            params=[selected_pid],
-        )
-        st.dataframe(dx_df, use_container_width=True, hide_index=True)
+    with left:
+        st.markdown("### Diagnoses")
+        try:
+            diagnoses_df = load_diagnoses(selected_pid)
+            if diagnoses_df.empty:
+                st.info(
+                    "No diagnoses available for this patient."
+                )
+            else:
+                st.dataframe(
+                    diagnoses_df,
+                    use_container_width=True,
+                    hide_index=True,
+                )
+        except Exception as exc:
+            st.error("Unable to load diagnoses.")
+            st.exception(exc)
 
-    with c2:
-        st.subheader("Active Medications")
-        med_df = conn.query(
-            "SELECT DRUG_NAME, DOSAGE, FREQUENCY, ROUTE, PRESCRIBER "
-            "FROM CARE360_DB.RAW.MEDICATIONS WHERE PATIENT_ID = ? AND IS_ACTIVE = TRUE "
-            "ORDER BY DRUG_NAME",
-            params=[selected_pid],
-        )
-        st.dataframe(med_df, use_container_width=True, hide_index=True)
+    with right:
+        st.markdown("### Medications")
+        try:
+            medications_df = load_medications(selected_pid)
+            if medications_df.empty:
+                st.info(
+                    "No medications available for this patient."
+                )
+            else:
+                st.dataframe(
+                    medications_df,
+                    use_container_width=True,
+                    hide_index=True,
+                )
+        except Exception as exc:
+            st.error("Unable to load medications.")
+            st.exception(exc)
 
-# ── Tab 2: Risk Stratification ──────────────────────────────────
-
-with tab2:
-    st.subheader(f"Risk Score: {int(risk['RISK_SCORE'])} / 6 — :{tier_color}[{risk['RISK_TIER']}]")
-
-    st.markdown(
-        "> This score is calculated using **transparent, deterministic rules only**. "
-        "No machine learning, no opaque predictions. Every point maps to a named, "
-        "inspectable condition."
+# ============================================================
+# TAB 2 - RISK STRATIFICATION
+# ============================================================
+with tab_risk:
+    st.subheader("Explainable Risk Stratification")
+    st.caption(
+        "Care360 uses deterministic, transparent rules. "
+        "No machine-learning model is used to predict patient risk."
     )
 
-    flag_defs = [
-        ("FLAG_MULTIMORBIDITY", "Multimorbidity", f"Diagnosis count >= 3 (actual: {int(risk['DIAGNOSIS_COUNT'])})"),
-        ("FLAG_UNCONTROLLED_DIABETES", "Uncontrolled Diabetes", f"Diabetes diagnosis + HbA1c > 9.0 (actual: {fmt_num(risk['LATEST_HBA1C'])})"),
-        ("FLAG_POLYPHARMACY", "Polypharmacy", f"Active medications >= 8 (actual: {int(risk['ACTIVE_MED_COUNT'])})"),
-        ("FLAG_FREQUENT_ER", "Frequent ER Visits", f"ER visits in 90 days >= 2 (actual: {int(risk['ER_VISITS_LAST_90D'])})"),
-        ("FLAG_RENAL_RISK", "Renal Risk", f"CKD diagnosis + creatinine > 2.0 (actual: {fmt_num(risk['LATEST_CREATININE'])})"),
-        ("FLAG_ELDERLY", "Elderly", f"Age >= 75 (actual: {int(risk['AGE'])})"),
+    score_col, tier_col = st.columns(2)
+    score_col.metric(
+        "Risk Score",
+        f"{risk['RISK_SCORE']} / 6",
+    )
+    tier_col.metric(
+        "Risk Tier",
+        risk_badge(risk["RISK_TIER"]),
+    )
+
+    st.divider()
+    st.markdown("### Rule Evaluation")
+
+    rules = [
+        (
+            "Multimorbidity",
+            "3 or more diagnoses",
+            risk["FLAG_MULTIMORBIDITY"],
+        ),
+        (
+            "Uncontrolled Diabetes",
+            "Diabetes + latest HbA1c > 9%",
+            risk["FLAG_UNCONTROLLED_DIABETES"],
+        ),
+        (
+            "Polypharmacy",
+            "8 or more active medications",
+            risk["FLAG_POLYPHARMACY"],
+        ),
+        (
+            "Frequent ER",
+            "2 or more ER visits in 90 days",
+            risk["FLAG_FREQUENT_ER"],
+        ),
+        (
+            "Renal Risk",
+            "CKD + latest creatinine > 2 mg/dL",
+            risk["FLAG_RENAL_RISK"],
+        ),
+        (
+            "Elderly",
+            "Age 75 or older",
+            risk["FLAG_ELDERLY"],
+        ),
     ]
 
-    for flag_col, label, detail in flag_defs:
-        fired = int(risk[flag_col]) == 1
-        icon = "✅" if fired else "—"
-        st.markdown(f"**{icon} {label}** — {detail}")
-
-    st.divider()
-    st.subheader("Explanation")
-    explanation = risk["RISK_EXPLANATION"]
-    if explanation:
-        st.info(explanation)
-    else:
-        st.success("No risk flags triggered for this patient.")
-
-# ── Tab 3: Timeline ─────────────────────────────────────────────
-
-with tab3:
-    timeline_df = load_timeline(selected_pid)
-
-    event_types = sorted(timeline_df["EVENT_TYPE"].unique().tolist())
-    selected_types = st.multiselect(
-        "Filter by event type", event_types, default=event_types
+    rule_df = pd.DataFrame(
+        [
+            {
+                "Risk Rule": rule_name,
+                "Definition": definition,
+                "Result": flag_display(value),
+            }
+            for rule_name, definition, value in rules
+        ]
     )
 
-    filtered = timeline_df[timeline_df["EVENT_TYPE"].isin(selected_types)]
     st.dataframe(
-        filtered,
-        use_container_width=True,
+        rule_df,
         hide_index=True,
-        column_config={
-            "EVENT_DATE": st.column_config.DateColumn("Date"),
-            "EVENT_TYPE": "Type",
-            "EVENT_SUMMARY": "Summary",
-            "SOURCE_ID": "Source ID",
-        },
+        use_container_width=True,
     )
-    st.caption(f"Showing {len(filtered)} of {len(timeline_df)} events")
 
-# ── Tab 4: Ask Care360 ──────────────────────────────────────────
+    st.markdown("### Why this score?")
+    explanation = risk.get(
+        "RISK_EXPLANATION",
+        "No risk explanation available.",
+    )
+    if pd.isna(explanation):
+        explanation = "No risk rules triggered."
+    st.info(explanation)
 
-with tab4:
-    st.markdown(
-        "Ask a clinical, safety, or regulatory question. Answers are grounded "
-        "in retrieved document evidence with cited sources."
+# ============================================================
+# TAB 3 - TIMELINE
+# ============================================================
+with tab_timeline:
+    st.subheader("Patient Timeline")
+    try:
+        timeline_df = load_timeline(selected_pid)
+        if timeline_df.empty:
+            st.info(
+                "No timeline events available for this patient."
+            )
+        else:
+            event_types = sorted(
+                timeline_df["EVENT_TYPE"]
+                .dropna()
+                .unique()
+                .tolist()
+            )
+            selected_events = st.multiselect(
+                "Filter event types",
+                event_types,
+                default=event_types,
+            )
+            filtered_timeline = timeline_df[
+                timeline_df["EVENT_TYPE"]
+                .isin(selected_events)
+            ]
+            st.dataframe(
+                filtered_timeline,
+                hide_index=True,
+                use_container_width=True,
+            )
+    except Exception as exc:
+        st.error("Unable to load patient timeline.")
+        st.exception(exc)
+
+# ============================================================
+# TAB 4 - ASK CARE360
+# ============================================================
+with tab_ask:
+    st.subheader("Ask Care360")
+    st.caption(
+        "Answers are generated only from retrieved Care360 "
+        "evidence and include source citations."
     )
 
     question = st.text_area(
-        "Your question",
-        placeholder=f"e.g., What evidence suggests {pat['PATIENT_NAME']} has medication safety risks?",
-        height=80,
+        "Ask a clinical or safety question",
+        placeholder=(
+            "Example: What evidence suggests "
+            "NSAID-related kidney risk?"
+        ),
+        height=100,
+    )
+    ask_button = st.button(
+        "Ask Care360",
+        type="primary",
     )
 
-    if st.button("Ask Care360", type="primary", disabled=not question.strip()):
-        with st.spinner("Searching evidence and generating answer..."):
-            session = conn.session()
-            result_raw = session.sql(
-                "CALL CARE360_DB.APP.ASK_CARE360(?, ?, 5)",
-                params=[question.strip(), selected_pid],
-            ).collect()
-
-            result = json.loads(result_raw[0][0])
-
-        answer = result.get("answer", "")
-        sources = result.get("sources", [])
-        chunks_retrieved = result.get("chunks_retrieved", 0)
-
-        st.subheader("Answer")
-        if "Insufficient evidence" in answer:
-            st.warning(answer)
+    if ask_button:
+        if not question.strip():
+            st.warning("Please enter a question.")
         else:
-            st.markdown(answer)
-
-        st.divider()
-        st.subheader(f"Sources ({chunks_retrieved} chunks retrieved)")
-
-        for i, src in enumerate(sources):
-            with st.expander(
-                f"[{i+1}] {src.get('FILENAME', 'Unknown')} — Chunk {src.get('CHUNK_ID', '?')}"
+            with st.spinner(
+                "Searching Care360 evidence and generating answer..."
             ):
-                st.markdown(f"**Document Type:** {src.get('DOC_TYPE', 'N/A')}")
-                st.markdown(f"**Patient ID:** {src.get('PATIENT_ID') or 'N/A (regulatory)'}")
-                st.markdown(f"**Chunk ID:** `{src.get('CHUNK_ID', '?')}`")
-                st.text(src.get("CHUNK_TEXT", "")[:1500])
+                try:
+                    result_raw = execute_scalar(
+                        """
+                        CALL CARE360_DB.APP.ASK_CARE360(
+                            %s, %s, %s
+                        )
+                        """,
+                        (
+                            question.strip(),
+                            selected_pid,
+                            5,
+                        ),
+                    )
+                    if result_raw is None:
+                        st.error(
+                            "No response was returned by Care360."
+                        )
+                    else:
+                        if isinstance(result_raw, str):
+                            try:
+                                result = json.loads(result_raw)
+                            except json.JSONDecodeError:
+                                result = {
+                                    "answer": result_raw
+                                }
+                        else:
+                            result = result_raw
+
+                        answer = result.get(
+                            "answer",
+                            "No answer returned.",
+                        )
+
+                        st.markdown("### Answer")
+                        if (
+                            "insufficient evidence"
+                            in answer.lower()
+                        ):
+                            st.warning(answer)
+                        else:
+                            st.success(answer)
+
+                        # ------------------------------------
+                        # SOURCES
+                        # ------------------------------------
+                        sources = result.get(
+                            "sources",
+                            [],
+                        )
+                        if sources:
+                            st.markdown("### Sources")
+                            for index, source in enumerate(
+                                sources,
+                                start=1,
+                            ):
+                                if isinstance(source, dict):
+                                    filename = source.get(
+                                        "filename",
+                                        source.get(
+                                            "FILENAME",
+                                            "Source",
+                                        ),
+                                    )
+                                    chunk_id = source.get(
+                                        "chunk_id",
+                                        source.get(
+                                            "CHUNK_ID",
+                                            "",
+                                        ),
+                                    )
+                                    patient_id = source.get(
+                                        "patient_id",
+                                        source.get(
+                                            "PATIENT_ID",
+                                            "",
+                                        ),
+                                    )
+                                    chunk_text = source.get(
+                                        "chunk_text",
+                                        source.get(
+                                            "CHUNK_TEXT",
+                                            "",
+                                        ),
+                                    )
+                                    label = (
+                                        f"{index}. {filename}"
+                                    )
+                                    if chunk_id:
+                                        label += (
+                                            f" - {chunk_id}"
+                                        )
+                                    with st.expander(label):
+                                        if patient_id:
+                                            st.caption(
+                                                "Patient ID: "
+                                                f"{patient_id}"
+                                            )
+                                        if chunk_text:
+                                            st.write(
+                                                chunk_text
+                                            )
+                                else:
+                                    st.write(
+                                        f"{index}. {source}"
+                                    )
+
+                        chunks_retrieved = result.get(
+                            "chunks_retrieved"
+                        )
+                        if chunks_retrieved is not None:
+                            st.caption(
+                                "Evidence chunks retrieved: "
+                                f"{chunks_retrieved}"
+                            )
+
+                        st.caption(
+                            "All data shown in this prototype "
+                            "is synthetic demo data."
+                        )
+                except Exception as exc:
+                    st.error(
+                        "Care360 was unable to process "
+                        "the question."
+                    )
+                    st.exception(exc)
+
+# ============================================================
+# FOOTER
+# ============================================================
+st.divider()
+st.caption(
+    "Care360 Copilot - Snowflake CoCo CLI Hackathon - "
+    "Synthetic data only"
+)
