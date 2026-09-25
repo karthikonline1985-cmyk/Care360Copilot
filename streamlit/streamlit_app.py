@@ -1,4 +1,6 @@
-import os
+import streamlit as st
+import snowflake.connector
+from cryptography.hazmat.primitives import serialization
 import json
 import math
 import streamlit as st
@@ -12,7 +14,30 @@ def fmt_num(val, decimals=1):
         return "N/A"
     return f"{val:.{decimals}f}"
 
-conn = st.connection("snowflake", ttl=os.getenv("SNOWFLAKE_CONNECTION_TTL"))
+@st.cache_resource
+def get_connection():
+    private_key_pem = st.secrets["snowflake"]["private_key"]
+    private_key = serialization.load_pem_private_key(
+        private_key_pem.encode("utf-8"),
+        password=None,
+    )
+    private_key_der = private_key.private_bytes(
+        encoding=serialization.Encoding.DER,
+        format=serialization.PrivateFormat.PKCS8,
+        encryption_algorithm=serialization.NoEncryption(),
+    )
+    return snowflake.connector.connect(
+        account=st.secrets["snowflake"]["account"],
+        user=st.secrets["snowflake"]["user"],
+        authenticator="SNOWFLAKE_JWT",
+        private_key=private_key_der,
+        role=st.secrets["snowflake"]["role"],
+        warehouse=st.secrets["snowflake"]["warehouse"],
+        database=st.secrets["snowflake"]["database"],
+        schema=st.secrets["snowflake"]["schema"],
+    )
+
+conn = get_connection()
 
 
 # ── Data loaders ─────────────────────────────────────────────────
