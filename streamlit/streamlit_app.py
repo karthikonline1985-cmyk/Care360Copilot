@@ -584,9 +584,6 @@ with tab_ask:
 
             st.markdown("### Answer")
             st.success(result["answer"])
-            st.caption(
-                "Answered from structured risk data (no LLM call)."
-            )
         else:
             with st.spinner(
                 "Searching Care360 evidence and generating answer..."
