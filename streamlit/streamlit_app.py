@@ -1,5 +1,6 @@
 import json
 import math
+import re
 import pandas as pd
 import streamlit as st
 import snowflake.connector
@@ -507,6 +508,16 @@ with tab_ask:
     if ask_button:
         if not question.strip():
             st.warning("Please enter a question.")
+        elif is_risk_question(question):
+            risk_row = risk_match.iloc[0].to_dict()
+            result = build_risk_answer(risk_row)
+            result["question"] = question.strip()
+
+            st.markdown("### Answer")
+            st.success(result["answer"])
+            st.caption(
+                "Answered from structured risk data (no LLM call)."
+            )
         else:
             with st.spinner(
                 "Searching Care360 evidence and generating answer..."
@@ -521,7 +532,7 @@ with tab_ask:
                         (
                             question.strip(),
                             selected_pid,
-                            5,
+                            3,
                         ),
                     )
                     if result_raw is None:
