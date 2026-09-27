@@ -173,6 +173,75 @@ def flag_display(value):
     return "\u2705 Triggered" if int(value or 0) == 1 else "\u2796 Not triggered"
 
 # ============================================================
+# FAST-PATH: structured risk answers (no LLM)
+# ============================================================
+_RISK_PATTERNS = [
+    re.compile(r"why.*(high|moderate|low)\s*risk", re.I),
+    re.compile(r"why.*risk", re.I),
+    re.compile(r"(what|which).*risk\s*factor", re.I),
+    re.compile(r"renal\s*risk", re.I),
+    re.compile(r"kidney\s*risk", re.I),
+    re.compile(r"diabetes.*poorly\s*controlled", re.I),
+    re.compile(r"uncontrolled\s*diabetes", re.I),
+    re.compile(r"(what|why).*polypharmacy", re.I),
+    re.compile(r"(what|why).*frequent\s*(er|emergency)", re.I),
+]
+
+def is_risk_question(question: str) -> bool:
+    return any(p.search(question) for p in _RISK_PATTERNS)
+
+def build_risk_answer(risk_row) -> dict:
+    r = risk_row
+    tier = str(r.get("RISK_TIER", "UNKNOWN")).upper()
+    explanation = r.get("RISK_EXPLANATION", "")
+    score = r.get("RISK_SCORE", "N/A")
+    pid = r.get("PATIENT_ID", "")
+    name = r.get("PATIENT_NAME", pid)
+
+    lines = [f"**{name}** is classified as **{tier} risk** (score: {score}/6).\n"]
+    if explanation and str(explanation).strip() and str(explanation).strip() != "None":
+        lines.append("**Contributing factors:**")
+        for part in str(explanation).rstrip(";").split(";"):
+            part = part.strip()
+            if part:
+                lines.append(f"- {part}")
+    else:
+        lines.append("No individual risk flags are currently triggered.")
+
+    flag_labels = {
+        "FLAG_MULTIMORBIDITY": "Multimorbidity",
+        "FLAG_UNCONTROLLED_DIABETES": "Uncontrolled diabetes",
+        "FLAG_POLYPHARMACY": "Polypharmacy",
+        "FLAG_FREQUENT_ER": "Frequent ER visits",
+        "FLAG_RENAL_RISK": "Renal risk",
+        "FLAG_ELDERLY": "Elderly",
+    }
+    active = [lbl for col, lbl in flag_labels.items() if int(r.get(col, 0) or 0) == 1]
+    if active:
+        lines.append("\n**Active flags:** " + ", ".join(active))
+
+    extras = []
+    hba1c = r.get("LATEST_HBA1C")
+    if hba1c is not None and str(hba1c) != "None":
+        extras.append(f"Latest HbA1c: {hba1c}%")
+    creat = r.get("LATEST_CREATININE")
+    if creat is not None and str(creat) != "None":
+        extras.append(f"Latest creatinine: {creat} mg/dL")
+    er = r.get("ER_VISITS_LAST_90D")
+    if er is not None and int(er or 0) > 0:
+        extras.append(f"ER visits (last 90 days): {er}")
+    if extras:
+        lines.append("\n**Key metrics:** " + " | ".join(extras))
+
+    return {
+        "answer": "\n".join(lines),
+        "sources": [],
+        "chunks_retrieved": 0,
+        "patient_filter": pid,
+        "question": "",
+        "fast_path": True,
+    }
+# ============================================================
 # LOAD BASE DATA
 # ============================================================
 try:
