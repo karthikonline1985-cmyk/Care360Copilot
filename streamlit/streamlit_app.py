@@ -222,10 +222,10 @@ def build_risk_answer(risk_row) -> dict:
 
     extras = []
     hba1c = r.get("LATEST_HBA1C")
-    if hba1c is not None and str(hba1c) != "None":
+    if hba1c is not None and str(hba1c) not in ("None", "nan"):
         extras.append(f"Latest HbA1c: {hba1c}%")
     creat = r.get("LATEST_CREATININE")
-    if creat is not None and str(creat) != "None":
+    if creat is not None and str(creat) not in ("None", "nan"):
         extras.append(f"Latest creatinine: {creat} mg/dL")
     er = r.get("ER_VISITS_LAST_90D")
     if er is not None and int(er or 0) > 0:
