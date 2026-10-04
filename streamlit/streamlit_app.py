@@ -285,11 +285,11 @@ def build_risk_answer(risk_row) -> dict:
 try:
     patients_df = load_patients()
     risk_df = load_risk_scores()
-except Exception as exc:
+except Exception:
     st.error(
-        "Unable to connect to the Care360 Snowflake data."
+        "Care360 is temporarily unable to access the data. "
+        "Please refresh and try again."
     )
-    st.exception(exc)
     st.stop()
 
 if patients_df.empty:
@@ -449,9 +449,8 @@ with tab_patient:
                     use_container_width=True,
                     hide_index=True,
                 )
-        except Exception as exc:
-            st.error("Unable to load diagnoses.")
-            st.exception(exc)
+        except Exception:
+            st.error("Unable to load diagnoses. Please refresh and try again.")
 
     with right:
         st.markdown("### Medications")
@@ -467,9 +466,8 @@ with tab_patient:
                     use_container_width=True,
                     hide_index=True,
                 )
-        except Exception as exc:
-            st.error("Unable to load medications.")
-            st.exception(exc)
+        except Exception:
+            st.error("Unable to load medications. Please refresh and try again.")
 
 # ============================================================
 # TAB 2 — RISK STRATIFICATION
@@ -585,9 +583,8 @@ with tab_timeline:
                 hide_index=True,
                 use_container_width=True,
             )
-    except Exception as exc:
-        st.error("Unable to load patient timeline.")
-        st.exception(exc)
+    except Exception:
+        st.error("Unable to load patient timeline. Please refresh and try again.")
 
 # ============================================================
 # TAB 4 — ASK CARE360
@@ -748,12 +745,11 @@ with tab_ask:
                             "All data shown in this prototype "
                             "is synthetic demo data."
                         )
-                except Exception as exc:
+                except Exception:
                     st.error(
                         "Care360 was unable to process "
-                        "the question."
+                        "the question. Please try again."
                     )
-                    st.exception(exc)
 
 # ============================================================
 # FOOTER
