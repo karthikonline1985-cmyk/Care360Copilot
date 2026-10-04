@@ -195,8 +195,8 @@ def display_value(value, decimals=None):
         if math.isnan(value):
             return "N/A"
         if decimals is not None:
-            return round(value, decimals)
-    return value
+            return str(round(value, decimals))
+    return str(value)
 
 def risk_badge(tier):
     tier = str(tier).upper()
