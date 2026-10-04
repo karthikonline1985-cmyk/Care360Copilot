@@ -4,6 +4,7 @@ import re
 import pandas as pd
 import streamlit as st
 import snowflake.connector
+from snowflake.connector.errors import ProgrammingError, OperationalError
 from cryptography.hazmat.primitives import serialization
 
 # ============================================================
@@ -18,7 +19,23 @@ st.set_page_config(
 # ============================================================
 # SNOWFLAKE CONNECTION
 # ============================================================
-@st.cache_resource
+def _connection_is_valid(conn):
+    """Return True only if the cached connection can still talk to Snowflake."""
+    try:
+        if conn is None or conn.is_closed():
+            return False
+        cur = conn.cursor()
+        try:
+            cur.execute("SELECT 1")
+            cur.fetchone()
+            return True
+        finally:
+            cur.close()
+    except Exception:
+        return False
+
+
+@st.cache_resource(ttl=1800, validate=_connection_is_valid)
 def get_connection():
     """
     Create a Snowflake connection using RSA key-pair authentication.
@@ -46,7 +63,34 @@ def get_connection():
         schema=st.secrets["snowflake"]["schema"],
     )
 
-conn = get_connection()
+
+# Snowflake error codes that indicate a stale/expired session.
+_STALE_SESSION_CODES = {390114, 390112, 250001}
+
+
+def _execute_with_retry(fn):
+    """Run fn(cursor) with automatic reconnection on stale sessions."""
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+        try:
+            return fn(cursor)
+        finally:
+            cursor.close()
+    except (ProgrammingError, OperationalError) as exc:
+        if getattr(exc, "errno", None) in _STALE_SESSION_CODES:
+            try:
+                get_connection.clear()
+            except Exception:
+                pass
+            conn = get_connection()
+            cursor = conn.cursor()
+            try:
+                return fn(cursor)
+            finally:
+                cursor.close()
+        raise
+
 
 # ============================================================
 # DATABASE HELPERS
@@ -55,28 +99,24 @@ def query_dataframe(sql, params=None):
     """
     Execute a parameterized Snowflake query and return a pandas DataFrame.
     """
-    cursor = conn.cursor()
-    try:
+    def _run(cursor):
         cursor.execute(sql, params or ())
         rows = cursor.fetchall()
         columns = [column[0] for column in cursor.description]
         return pd.DataFrame(rows, columns=columns)
-    finally:
-        cursor.close()
+    return _execute_with_retry(_run)
 
 def execute_scalar(sql, params=None):
     """
     Execute a query expected to return one value.
     """
-    cursor = conn.cursor()
-    try:
+    def _run(cursor):
         cursor.execute(sql, params or ())
         row = cursor.fetchone()
         if row:
             return row[0]
         return None
-    finally:
-        cursor.close()
+    return _execute_with_retry(_run)
 
 # ============================================================
 # DATA LOADERS
@@ -117,7 +157,7 @@ def load_diagnoses(patient_id):
 def load_medications(patient_id):
     return query_dataframe(
         """
-        SELECT MEDICATION_ID, DRUG_NAME, NDC_CODE, START_DATE, END_DATE, PRESCRIBER
+        SELECT MED_ID, DRUG_NAME, NDC_CODE, START_DATE, END_DATE, PRESCRIBER
         FROM CARE360_DB.RAW.MEDICATIONS
         WHERE PATIENT_ID = %s
         ORDER BY START_DATE DESC
@@ -156,9 +196,6 @@ def display_value(value, decimals=None):
             return "N/A"
         if decimals is not None:
             return round(value, decimals)
-    # Convert dates / timestamps / other unsupported objects to string
-    if not isinstance(value, (str, int, float)):
-        return str(value)
     return value
 
 def risk_badge(tier):
@@ -222,10 +259,10 @@ def build_risk_answer(risk_row) -> dict:
 
     extras = []
     hba1c = r.get("LATEST_HBA1C")
-    if hba1c is not None and str(hba1c) not in ("None", "nan"):
+    if hba1c is not None and str(hba1c) != "None":
         extras.append(f"Latest HbA1c: {hba1c}%")
     creat = r.get("LATEST_CREATININE")
-    if creat is not None and str(creat) not in ("None", "nan"):
+    if creat is not None and str(creat) != "None":
         extras.append(f"Latest creatinine: {creat} mg/dL")
     er = r.get("ER_VISITS_LAST_90D")
     if er is not None and int(er or 0) > 0:
@@ -241,6 +278,7 @@ def build_risk_answer(risk_row) -> dict:
         "question": "",
         "fast_path": True,
     }
+
 # ============================================================
 # LOAD BASE DATA
 # ============================================================
@@ -355,7 +393,7 @@ tab_patient, tab_risk, tab_timeline, tab_ask = st.tabs(
 )
 
 # ============================================================
-# TAB 1 - PATIENT 360
+# TAB 1 — PATIENT 360
 # ============================================================
 with tab_patient:
     st.subheader("Patient 360")
@@ -434,7 +472,7 @@ with tab_patient:
             st.exception(exc)
 
 # ============================================================
-# TAB 2 - RISK STRATIFICATION
+# TAB 2 — RISK STRATIFICATION
 # ============================================================
 with tab_risk:
     st.subheader("Explainable Risk Stratification")
@@ -516,7 +554,7 @@ with tab_risk:
     st.info(explanation)
 
 # ============================================================
-# TAB 3 - TIMELINE
+# TAB 3 — TIMELINE
 # ============================================================
 with tab_timeline:
     st.subheader("Patient Timeline")
@@ -552,7 +590,7 @@ with tab_timeline:
         st.exception(exc)
 
 # ============================================================
-# TAB 4 - ASK CARE360
+# TAB 4 — ASK CARE360
 # ============================================================
 with tab_ask:
     st.subheader("Ask Care360")
@@ -584,6 +622,9 @@ with tab_ask:
 
             st.markdown("### Answer")
             st.success(result["answer"])
+            st.caption(
+                "Answered from structured risk data (no LLM call)."
+            )
         else:
             with st.spinner(
                 "Searching Care360 evidence and generating answer..."
@@ -677,7 +718,7 @@ with tab_ask:
                                     )
                                     if chunk_id:
                                         label += (
-                                            f" - {chunk_id}"
+                                            f" \u2014 {chunk_id}"
                                         )
                                     with st.expander(label):
                                         if patient_id:
@@ -719,6 +760,6 @@ with tab_ask:
 # ============================================================
 st.divider()
 st.caption(
-    "Care360 Copilot - Snowflake CoCo CLI Hackathon - "
+    "Care360 Copilot \u2022 Snowflake CoCo CLI Hackathon \u2022 "
     "Synthetic data only"
 )
